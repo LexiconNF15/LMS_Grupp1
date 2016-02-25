@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using LMS_grupp1.Models;
 
 namespace LMS_grupp1.Controllers
-{
+{ 
     public class GroupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
