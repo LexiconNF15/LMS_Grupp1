@@ -18,7 +18,7 @@ namespace LMS_grupp1.Models
         }
 
         // assigned group
-        public Group GroupId { get; set; }
+        public int? GroupId { get; set; }
         public virtual Group Group { get; set; }
     }
 
