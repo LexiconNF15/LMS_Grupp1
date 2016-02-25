@@ -16,6 +16,10 @@ namespace LMS_grupp1.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        // assigned group
+        public Group GroupId { get; set; }
+        public virtual Group Group { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -30,7 +34,6 @@ namespace LMS_grupp1.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Group> Groups { get; set; }
 

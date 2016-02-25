@@ -12,6 +12,7 @@ namespace LMS_grupp1.Models
         public string Description { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public int GroupId { get; set; }
 
         public virtual IEnumerable<Group> Group { get; set; }
     }
