@@ -1,18 +1,24 @@
 ﻿@model IEnumerable<LMS_grupp1.Models.Group>
 
 @{
-    ViewBag.Title = "Groups";
+    ViewBag.Title = "Grupper";
 }
 
-<h2>Groups</h2>
+<h2>Grupper</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Lägg till grupp", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
         </th>
         <th></th>
     </tr>
@@ -20,16 +26,20 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                <form>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </form>
+            <td>           
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Users", "UserDetails", new { id = item.Id }) |
-                @Html.ActionLink("Courses", "CourseDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Studenter", "UserDetails", new { id = item.Id }) |
+                @Html.ActionLink("Kurser", "CourseDetails", new { id = item.Id }) |
+                @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
