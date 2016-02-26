@@ -16,12 +16,21 @@ namespace LMS_grupp1.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Name { get; set; }
+        public string Personnumber { get; set; }
+        //Foreign Key
+        public int GroupId { get; set; }
+        //Navigational property
+        public virtual Group Group { get; set; }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection2", throwIfV1Schema: false)
         {
         }
 
@@ -30,7 +39,7 @@ namespace LMS_grupp1.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Group> Groups { get; set; }
 
