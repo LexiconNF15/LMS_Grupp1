@@ -20,12 +20,15 @@ namespace LMS_grupp1.Models
         // assigned group
         public int? GroupId { get; set; }
         public virtual Group Group { get; set; }
+
+        public string Name { get; set; }
+        public string Personnumber { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection2", throwIfV1Schema: false)
         {
         }
 
