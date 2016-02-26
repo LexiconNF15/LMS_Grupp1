@@ -7,7 +7,7 @@ using System.Web;
 
 namespace LMS_grupp1.Models
 {
-    public class Group 
+    public class Group
     {
         public int Id { get; set; }
         [DisplayName("Benämning")]

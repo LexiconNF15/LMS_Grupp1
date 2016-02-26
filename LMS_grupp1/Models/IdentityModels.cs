@@ -18,7 +18,7 @@ namespace LMS_grupp1.Models
         }
 
         // assigned group
-        public Group GroupId { get; set; }
+        public int? GroupId { get; set; }
         public virtual Group Group { get; set; }
 
         public string Name { get; set; }
@@ -28,7 +28,7 @@ namespace LMS_grupp1.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection2", throwIfV1Schema: false)
         {
         }
 
