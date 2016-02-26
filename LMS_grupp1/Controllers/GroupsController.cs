@@ -9,17 +9,25 @@ using System.Web.Mvc;
 using LMS_grupp1.Models;
 
 namespace LMS_grupp1.Controllers
-{ 
+{
     public class GroupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Groups
+        [Authorize(Roles = "Teacher")]
         public ActionResult Index()
         {
             return View(db.Groups.ToList());
         }
 
+        // GET: Group
+        [Authorize(Roles = "Student")]
+        public ActionResult StudentIndex(int id)
+        {
+            Group group = db.Groups.Find(id);
+            return View("Courses", group);
+        }
 
         // GET: Groups/UserDetails/5
         public ActionResult UserDetails(int? id)
@@ -39,15 +47,18 @@ namespace LMS_grupp1.Controllers
         // GET: Groups/CourseDetails/5
         public ActionResult CourseDetails(int? id)
         {
-            Course course = db.Courses.Find(id);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           return View("Courses", course);
+            var course = db.Courses
+                .Where(c => c.Id == id)
+                .ToList();
+            return View("Courses", course);
         }
 
         // GET: Groups/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -58,6 +69,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
             if (ModelState.IsValid)
@@ -71,6 +83,7 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Groups/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,6 +103,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
             if (ModelState.IsValid)
@@ -102,6 +116,7 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Groups/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,6 +134,7 @@ namespace LMS_grupp1.Controllers
         // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(int id)
         {
             Group group = db.Groups.Find(id);
