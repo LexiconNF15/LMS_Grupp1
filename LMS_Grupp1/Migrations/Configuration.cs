@@ -9,7 +9,7 @@ namespace LMS_grupp1.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<LMS_grupp1.Models.ApplicationDbContext>
     {
-        public Configuration()
+        public Configuration() 
         {
             AutomaticMigrationsEnabled = true;
             ContextKey = "LMS_grupp1.Models.ApplicationDbContext";
