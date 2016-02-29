@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS_grupp1.Models;
+using System.Data.Entity;
+using System.Data;
+using System.Collections.Generic;
+
 
 namespace LMS_grupp1.Controllers
 {
@@ -17,6 +21,7 @@ namespace LMS_grupp1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -139,6 +144,13 @@ namespace LMS_grupp1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            // A Group Id list to get a drop down list in a create register page
+            ViewBag.GroupId = new SelectList(db.Groups, "Name", "Name");
+
+            // A Role Id list to get a drop down list in a create register page
+            ViewBag.RoleId = new SelectList(db.Roles, "Name", "Name");
+
             return View();
         }
 

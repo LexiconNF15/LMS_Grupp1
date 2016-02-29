@@ -40,5 +40,9 @@ namespace LMS_grupp1.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Group> Groups { get; set; }
 
+
+        public System.Collections.IEnumerable AspNetUserRoles { get; set; }
+
+        public System.Collections.IEnumerable AspNetRoles { get; set; }
     }
 }
