@@ -15,21 +15,32 @@ namespace LMS_grupp1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Groups
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index()
         {
-            return View(db.Groups.ToList());
-        }
-
-        // GET: Group
-        [Authorize(Roles = "Student")]
-        public ActionResult StudentIndex(int id)
-        {
-            Group group = db.Groups.Find(id);
-            return View("Courses", group);
+            if (User.IsInRole("Teacher"))
+            {
+                return View(db.Groups.ToList());
+            }
+            if (User.IsInRole("Student"))
+            {
+                int? student = db.Users
+                    .Where(u => u.Name == User.Identity.Name)
+                    .Select(u => u.GroupId)
+                    .First();
+                if (student != null)
+                {
+                    var course = db.Courses
+                        .Where(c => c.Id == student)
+                        .ToList();
+                    return View("Courses", course);
+                }
+            }
+            return View("Home");
         }
 
         // GET: Groups/UserDetails/5
+
         public ActionResult UserDetails(int? id)
         {
             if (id == null)
