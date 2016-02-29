@@ -6,6 +6,8 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Deltagare", "UserDetails", "Groups", routeValues: null, htmlAttributes: new { title = "Deltagare" })</li>
+        <li>@Html.ActionLink("Kurser", "Index", "Courses", routeValues: null, htmlAttributes: new { title = "Deltagare" })</li>
         @if (User.IsInRole("Teacher"))
         {
             <li>@Html.ActionLink("Registrera", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>

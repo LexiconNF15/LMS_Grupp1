@@ -21,15 +21,10 @@ namespace LMS_grupp1.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                int? groupId = null;
-                List<int?> list = db.Users
-                    .Where(u => u.Name == User.Identity.Name)
+                int? groupId = db.Users
+                    .Where(u => u.Email == User.Identity.Name)
                     .Select(g => g.GroupId)
-                    .ToList();
-                if (list.Count > 0)
-                {
-                    groupId = list[0];
-                }
+                    .First();
                 if (User.IsInRole("Teacher") && groupId == null)
                 {
                     return View("IndexGroup", db.Groups.ToList());
@@ -37,6 +32,7 @@ namespace LMS_grupp1.Controllers
                 else
                 {
                     //Group group = db.Groups.Find(groupId);
+                    ViewBag.GroupId = groupId;
                     var course = db.Courses
                         .Where(c => c.Id == groupId)
                         .ToList();
@@ -61,13 +57,13 @@ namespace LMS_grupp1.Controllers
         // GET: Groups/UserDetails/5
 
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult UserDetails(int? id)
+        public ActionResult UserDetails()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Group group = db.Groups.Find(id);
+            int? groupId = db.Users
+                .Where(u => u.Email == User.Identity.Name)
+                .Select(g => g.GroupId)
+                .First();
+            Group group = db.Groups.Find(groupId);
             if (group == null)
             {
                 return HttpNotFound();
@@ -77,16 +73,16 @@ namespace LMS_grupp1.Controllers
 
         // GET: Groups/CourseDetails/5
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult CourseDetails(int? id)
+        public ActionResult CourseDetails()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            int? groupId = db.Users
+                .Where(u => u.Email == User.Identity.Name)
+                .Select(g => g.GroupId)
+                .First();
             var course = db.Courses
-                .Where(c => c.Id == id)
+                .Where(c => c.Id == groupId)
                 .ToList();
-            return View("Courses", course);
+            return RedirectToAction("Index", "Courses");
         }
 
         // GET: Groups/Create
