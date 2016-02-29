@@ -146,7 +146,7 @@ namespace LMS_grupp1.Controllers
         {
 
             // A Group Id list to get a drop down list in a create register page
-            ViewBag.GroupId = new SelectList(db.Groups, "Name", "Name");
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
 
             // A Role Id list to get a drop down list in a create register page
             ViewBag.RoleId = new SelectList(db.Roles, "Name", "Name");
@@ -163,10 +163,12 @@ namespace LMS_grupp1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, GroupId = model.GroupId };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, model.Role);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -175,7 +177,7 @@ namespace LMS_grupp1.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Groups");
                 }
                 AddErrors(result);
             }
@@ -404,7 +406,7 @@ namespace LMS_grupp1.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Groups");
         }
 
         //
@@ -461,7 +463,7 @@ namespace LMS_grupp1.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Groups");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

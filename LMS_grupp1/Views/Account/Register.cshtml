@@ -41,10 +41,10 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Id, (SelectList)ViewBag.RoleId, "- Välj Roll -", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.RoleId, "- Välj Roll -", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
         </div>
     </div>
 
