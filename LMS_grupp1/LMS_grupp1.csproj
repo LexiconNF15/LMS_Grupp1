@@ -235,7 +235,7 @@
     <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\UserDetails.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
-    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\IndexGroup.cshtml" />
     <Content Include="Views\Groups\CourseDetails.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
@@ -243,6 +243,7 @@
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Groups\StudentIndex.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

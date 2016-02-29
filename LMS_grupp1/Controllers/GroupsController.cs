@@ -10,37 +10,57 @@ using LMS_grupp1.Models;
 
 namespace LMS_grupp1.Controllers
 {
+    [Authorize]
     public class GroupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Groups
-        [Authorize(Roles = "Teacher, Student")]
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            if (User.IsInRole("Teacher"))
+            if (User.Identity.IsAuthenticated)
             {
-                return View(db.Groups.ToList());
-            }
-            if (User.IsInRole("Student"))
-            {
-                int? student = db.Users
+                int? groupId = null;
+                List<int?> list = db.Users
                     .Where(u => u.Name == User.Identity.Name)
-                    .Select(u => u.GroupId)
-                    .First();
-                if (student != null)
+                    .Select(g => g.GroupId)
+                    .ToList();
+                if (list.Count > 0)
                 {
+                    groupId = list[0];
+                }
+                if (User.IsInRole("Teacher") && groupId == null)
+                {
+                    return View("IndexGroup", db.Groups.ToList());
+                }
+                else
+                {
+                    //Group group = db.Groups.Find(groupId);
                     var course = db.Courses
-                        .Where(c => c.Id == student)
+                        .Where(c => c.Id == groupId)
                         .ToList();
-                    return View("Courses", course);
+                    return RedirectToAction("Index", "Courses", course);
                 }
             }
-            return View("Home");
+            return View();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult AddTeacher(int groupId)
+        {
+            var teacher = db.Users
+                .Where(u => u.Email == User.Identity.Name)
+                .First();
+            teacher.GroupId = groupId;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Courses");
         }
 
         // GET: Groups/UserDetails/5
 
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult UserDetails(int? id)
         {
             if (id == null)
@@ -56,6 +76,7 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Groups/CourseDetails/5
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult CourseDetails(int? id)
         {
             if (id == null)

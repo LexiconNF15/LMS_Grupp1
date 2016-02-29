@@ -1,13 +1,14 @@
 ﻿@model LMS_grupp1.Models.Group
 
+
 @{
-    ViewBag.Title = "Kur";
+    ViewBag.Title = "Kurser";
 }
 
-<h2>Details</h2>
+<h2>Kurser</h2>
 
 <div>
-    <h4>Group</h4>
+    <h4>Kurser</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,13 +17,13 @@
 
         <dd>
             @Html.DisplayFor(model => model.Name)
-        </dd> 
+        </dd>
 
     </dl>
 </div>
 
 @foreach (var item in Model.Courses)
-{
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -35,7 +36,8 @@
             @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
         </td>
     </tr>
-}
+    }
+
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
