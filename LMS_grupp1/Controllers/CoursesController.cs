@@ -38,7 +38,11 @@ namespace LMS_grupp1.Controllers
         // GET: Courses/Create
         public ActionResult Create()
         {
+            // A Group Id list to get a drop down list in a create course page
+             ViewBag.GroupId = new SelectList(db.Groups, "Name", "Name");
+           
             return View();
+          
         }
 
         // POST: Courses/Create
@@ -46,7 +50,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartTime,EndTime")] Course course)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +82,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartTime,EndTime")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
         {
             if (ModelState.IsValid)
             {
