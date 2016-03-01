@@ -4,11 +4,15 @@
     ViewBag.Title = "Kurser";
 }
 
-<h2>Kurser</h2>
+<h2>Kurs</h2>
 
-<p>
-    @Html.ActionLink("Ny kurs", "Create")
-</p>
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Ny kurs", "Create")
+        @Html.ActionLink("Lämna kurs", "RemoveTeacher")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -47,12 +51,8 @@
             </td>
             @if (User.IsInRole("Teacher"))
             {
-                <td>
-                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
-                </td>
+                @Html.ActionLink("Ändra", "Edit", new { id = item.Id })
+                @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
             }
         </tr>
         @Html.HiddenFor(modelItem => item.GroupId)

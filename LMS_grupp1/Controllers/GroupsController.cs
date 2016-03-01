@@ -51,7 +51,7 @@ namespace LMS_grupp1.Controllers
             teacher.GroupId = groupId;
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Courses");
+            return RedirectToAction("Index", "Courses", groupId );
         }
 
         // GET: Groups/UserDetails/5
