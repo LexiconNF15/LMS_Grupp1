@@ -39,7 +39,7 @@ namespace LMS_grupp1.Controllers
         public ActionResult Create()
         {
             // A Group Id list to get a drop down list in a create course page
-             ViewBag.GroupId = new SelectList(db.Groups, "Name", "Name");
+             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
            
             return View();
           

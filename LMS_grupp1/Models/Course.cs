@@ -24,8 +24,10 @@ namespace LMS_grupp1.Models
         [DisplayName("Slutdatum")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndTime { get; set; }
+
+        [DisplayName("Grupp")]
         public int GroupId { get; set; }
 
-        public virtual IEnumerable<Group> Group { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

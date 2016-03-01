@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<LMS_grupp1.Models.Course>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kurser";
 }
 
-<h2>Index</h2>
+<h2>Kurser</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Ny kurs", "Create")
 </p>
 <table class="table">
     <tr>
@@ -23,35 +23,40 @@
         <th>
             @Html.DisplayNameFor(model => model.EndTime)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+
+            <td>
+                @Html.ActionLink("Kursinnehåll", "Details", new { id = item.Id })
+            </td>
+            @if (User.IsInRole("Teacher"))
+            {
+                <td>
+                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                </td>
+            }
+        </tr>
+        @Html.HiddenFor(modelItem => item.GroupId)
+
+    }
 
 </table>
