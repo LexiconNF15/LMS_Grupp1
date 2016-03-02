@@ -7,7 +7,7 @@
 <h2>Grupper</h2>
 
 <p>
-    @Html.ActionLink("Lägg till grupp", "Create")
+    @Html.ActionLink("Lägg till grupp", "GroupCreate")
 </p>
 <table class="table">
     <tr>
@@ -36,10 +36,10 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Ändra", "GroupEdit", new { id = item.Id }) |
                 @Html.ActionLink("Lägg till som lärare", "AddTeacher", new { groupId = item.Id }) |
                 @Html.ActionLink("Kurser", "CourseIndex", new { id = item.Id }) |
-                @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                @Html.ActionLink("Ta bort", "GroupDelete", new { id = item.Id })
             </td>
         </tr>
     }

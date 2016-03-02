@@ -56,7 +56,7 @@
 <p></p>
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Ändra gruppuppgifter", "Edit", new { id = Model.Id }) @:|
+        @Html.ActionLink("Ändra gruppuppgifter", "GroupEdit", new { id = Model.Id }) @:|
         @Html.ActionLink("Tillbaka till kurssida", "Index")
      }
      else

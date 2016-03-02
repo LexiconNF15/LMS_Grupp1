@@ -15,36 +15,6 @@ namespace LMS_grupp1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
-        {
-            return View(db.Courses.ToList());
-        }
-
-        // GET: Courses
-        public ActionResult IndexGroup(int groupId)
-        {
-            ViewBag.CourseName = db.Groups
-                .Where(g => g.Id == groupId)
-                .Select(n => n.Name)
-                .First();
-            ViewBag.GroupId = groupId;
-            var courses = db.Courses
-                .Where(g => g.GroupId == groupId)
-                .ToList();
-            return View(courses);
-        }
-
-        [Authorize(Roles = "Teacher")]
-        public ActionResult RemoveTeacher()
-        {
-            var teacher = db.Users
-                .Where(u => u.Email == User.Identity.Name)
-                .First();
-            teacher.GroupId = null;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "Groups");
-        }
 
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
@@ -62,11 +32,11 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Courses/Create
-        public ActionResult Create()
+        public ActionResult Create(int groupId)
         {
             // A Group Id list to get a drop down list in a create course page
-             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
-           
+            // ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
+            ViewBag.GroupId = groupId;          
             return View();
           
         }

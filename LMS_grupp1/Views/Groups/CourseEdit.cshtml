@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        @HiddenFor(model => model.GroupId)
+        @Html.HiddenFor(model => model.GroupId)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -60,7 +60,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka till kurser", "Index")
 </div>
 
 @section Scripts {
