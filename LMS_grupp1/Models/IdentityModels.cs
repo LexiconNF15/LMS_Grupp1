@@ -44,5 +44,7 @@ namespace LMS_grupp1.Models
         public System.Collections.IEnumerable AspNetUserRoles { get; set; }
 
         public System.Collections.IEnumerable AspNetRoles { get; set; }
+
+        public System.Data.Entity.DbSet<LMS_grupp1.Models.Activity> Activities { get; set; }
     }
 }
