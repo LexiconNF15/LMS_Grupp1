@@ -82,6 +82,9 @@ namespace LMS_grupp1.Models
 
         public string Role { get; set; }
         public int GroupId { get; set; }
+        public string Name { get; set; }
+        public string Personnumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel
