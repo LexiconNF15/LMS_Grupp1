@@ -1,0 +1,66 @@
+﻿@model LMS_grupp1.Models.Group
+@using System.Web.Security
+@{
+    ViewBag.Title = "Kursdeltagare";
+}
+
+<h2>Deltagare i grupp @Model.Name</h2>
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Lägg till deltagare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) |
+        @Html.ActionLink("Lämna som lärare", "RemoveTeacher")
+    </p>
+}
+<div>
+    <h4>Deltagarlista</h4>
+    <hr />
+
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Användarnamn")
+        </th>
+        <th>
+            @Html.DisplayName("Personnummmer")
+        </th>
+        <th>
+            @Html.DisplayName("Telefonnummer")
+        </th>
+    </tr>
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Personnumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+
+            @if (User.IsInRole("Teacher"))
+                {
+                <td>
+                    @Html.ActionLink("Ändra deltagaruppgift", "Edit", "Account", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort deltagare", "Delete", "Account", new { id = item.Id }, null)
+                </td>
+                }
+
+        </tr>
+    }
+</table>
+<p></p>
+    @if (User.IsInRole("Teacher"))
+    {
+        @Html.ActionLink("Ändra gruppuppgifter", "GroupEdit", new { id = Model.Id }) @:|
+        @Html.ActionLink("Tillbaka till kurssida", "Index")
+     }
+     else
+    {
+        @Html.ActionLink("Tillbaka till kurssida", "Index")
+    }
+</p>

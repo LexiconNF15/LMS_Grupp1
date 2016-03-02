@@ -16,6 +16,8 @@ namespace LMS_grupp1
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            // Added line to make model accept null values
+            DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
         }
     }
 }
