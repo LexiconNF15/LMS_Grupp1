@@ -163,7 +163,15 @@ namespace LMS_grupp1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, GroupId = model.GroupId };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    GroupId = model.GroupId,
+                    Name = model.Name,
+                    Personnumber = model.Personnumber,
+                    PhoneNumber = model.PhoneNumber
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -185,7 +193,47 @@ namespace LMS_grupp1.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteUser(string userId)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await UserManager.FindByEmailAsync(userId);
+                if (user == null)
+                {
+                    return View("Error");
+                }
+                UserManager.Delete(user);
+            }
+            return View();
+        }
 
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(User).State = EntityState.Modified;
+                db.SaveChanges();          
+                    return RedirectToAction("Index", "Groups");
+ 
+               
+            }
+            return View();
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
