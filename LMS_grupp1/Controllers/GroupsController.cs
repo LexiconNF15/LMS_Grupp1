@@ -201,7 +201,7 @@ namespace LMS_grupp1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return RedirectToAction("Index", "Activities", course);
         }
 
         // GET: Courses/Create

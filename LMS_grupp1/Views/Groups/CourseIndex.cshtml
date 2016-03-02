@@ -1,0 +1,71 @@
+﻿@model LMS_grupp1.Models.Group
+
+@{
+    ViewBag.Title = "Kurser";
+}
+
+<h2>
+    Kurser för grupp @Model.Name
+</h2>
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Lägg till kurs", "CourseCreate", new { groupId = Model.Id }) |
+        @Html.ActionLink("Lämna som lärare", "RemoveTeacher")
+    </p>
+}
+
+<div>
+    <h4>Kurslista</h4>
+    <hr />
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+    </tr>
+    @foreach (var item in Model.Courses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            @if (User.IsInRole("Teacher"))
+            {
+                <td>
+                    @Html.ActionLink("Kursmoment", "CourseDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Ändra", "CourseEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Ta bort", "CourseDelete", new { id = item.Id })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Uppgifter", "CourseDetails", new { id = item.Id })
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Ändra gruppuppgifter", "GroupEdit", new { id = Model.Id }) 
+    </p>
+}
+
