@@ -47,11 +47,12 @@
             </td>
 
             <td>
-                @Html.ActionLink("Kursinnehåll", "Details", new { id = item.Id })
+                @Html.ActionLink("Kursinnehåll", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Aktiviteter", "Index", "Activities", new { id = item.Id }, null)
             </td>
-            @if (User.IsInRole("Teacher"))
+           @if (User.IsInRole("Teacher"))
             {
-                @Html.ActionLink("Ändra", "Edit", new { id = item.Id })
+                @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) @:|
                 @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
             }
         </tr>
