@@ -212,9 +212,9 @@ namespace LMS_grupp1.Controllers
 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(string userId)
+        public ActionResult EditUser(string id)
         {
-            ApplicationUser user = db.Users.Find(userId);
+            ApplicationUser user = db.Users.Find(id);
             return View(user);
         }
 
