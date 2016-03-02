@@ -233,10 +233,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Delete.cshtml" />
-    <Content Include="Views\Groups\UserDetails.cshtml" />
+    <Content Include="Views\Groups\UserIndex.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
-    <Content Include="Views\Groups\IndexGroup.cshtml" />
-    <Content Include="Views\Groups\CourseDetails.cshtml" />
+    <Content Include="Views\Groups\GroupIndex.cshtml" />
+    <Content Include="Views\Groups\CourseIndex.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />

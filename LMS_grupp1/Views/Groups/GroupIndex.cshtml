@@ -38,7 +38,7 @@
             <td>
                 @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Lägg till som lärare", "AddTeacher", new { groupId = item.Id }) |
-                @Html.ActionLink("Kurser", "CourseDetails", new { id = item.Id }) |
+                @Html.ActionLink("Kurser", "CourseIndex", new { id = item.Id }) |
                 @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
             </td>
         </tr>

@@ -27,20 +27,24 @@ namespace LMS_grupp1.Controllers
                     .First();
                 if (User.IsInRole("Teacher") && groupId == null)
                 {
-                    return View("IndexGroup", db.Groups.ToList());
+                    return View("GroupIndex", db.Groups.ToList());
                 }
                 else
                 {
-                    //Group group = db.Groups.Find(groupId);
-                    ViewBag.GroupId = groupId;
-                    var course = db.Courses
-                        .Where(c => c.Id == groupId)
-                        .ToList();
-                    return RedirectToAction("Index", "Courses", course);
+                   Group group = db.Groups.Find(groupId);
+                   return View("CourseIndex", group);
                 }
             }
             return View();
         }
+
+
+        [Authorize(Roles="Teacher")]
+        public ActionResult GroupIndex()
+        {
+            return View(db.Groups.ToList());
+        }
+
 
         [Authorize(Roles = "Teacher")]
         public ActionResult AddTeacher(int groupId)
@@ -51,38 +55,52 @@ namespace LMS_grupp1.Controllers
             teacher.GroupId = groupId;
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Courses", groupId );
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult RemoveTeacher()
+        {
+            var teacher = db.Users
+                .Where(u => u.Email == User.Identity.Name)
+                .First();
+            teacher.GroupId = null;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Groups/UserDetails/5
 
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult UserDetails()
+        public ActionResult UserIndex()
         {
             int? groupId = db.Users
                 .Where(u => u.Email == User.Identity.Name)
                 .Select(g => g.GroupId)
                 .First();
-            Group group = db.Groups.Find(groupId);
-            if (group == null)
+            if (groupId != null)
             {
-                return HttpNotFound();
+                Group group = db.Groups.Find(groupId);
+                return View(group);
             }
-            return View(group);
+            return RedirectToAction("Index");
         }
 
         // GET: Groups/CourseDetails/5
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult CourseDetails()
+        public ActionResult CourseIndex()
         {
             int? groupId = db.Users
                 .Where(u => u.Email == User.Identity.Name)
                 .Select(g => g.GroupId)
                 .First();
-            var course = db.Courses
-                .Where(c => c.Id == groupId)
-                .ToList();
-            return RedirectToAction("Index", "Courses");
+            if (groupId != null)
+            {
+                Group group = db.Groups.Find(groupId);
+                return View(group);
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Groups/Create
