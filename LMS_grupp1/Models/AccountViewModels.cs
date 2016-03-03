@@ -121,16 +121,4 @@ namespace LMS_grupp1.Models
         [Display(Name = "E-post")]
         public string Email { get; set; }
     }
-
-    public class EditUserModel
-    {
-        [Display(Name = "Namn")]
-        public string Name { get; set; }
-
-        [Display(Name = "Personnummer")]
-        public string Personnumber { get; set; }
-
-        [Display(Name = "Telefonnummer")]
-        public string PhoneNumber { get; set; }
-    }
 }

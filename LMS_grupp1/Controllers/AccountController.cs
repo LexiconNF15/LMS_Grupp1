@@ -177,8 +177,8 @@ namespace LMS_grupp1.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.Role);
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
+                    // Don't sign in as the newly registered user
+                    // await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -193,26 +193,34 @@ namespace LMS_grupp1.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DeleteUser(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            return View(user);
+        }
+
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-       public async Task<ActionResult> DeleteUser(string userId)
-           // public ActionResult DeleteUser(string userId)
+        [Authorize(Roles = "Teacher")]
+        public ActionResult DeleteUser(ApplicationUser model)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = await UserManager.FindByEmailAsync(userId);
-                 // ApplicationUser user = db.Users.Find(userId);
+                ApplicationUser user = UserManager.FindById(model.Id);
                 if (user == null)
                 {
                     return View("Error");
                 }
-                UserManager.Delete(user);
+                var id = user.GroupId;
+                var result = UserManager.Delete(user);
+                return RedirectToAction ("Index", "Groups", new { groupId = model.Id} );
             }
             return View();
         }
 
-        [Authorize(Roles="Teacher")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult EditUser(string id)
         {
             ApplicationUser user = db.Users.Find(id);
@@ -220,17 +228,16 @@ namespace LMS_grupp1.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        public ActionResult EditUser(ApplicationUser user)
+        [Authorize(Roles = "Teacher")]
+        public ActionResult EditUser(ApplicationUser model)
         {
             if (ModelState.IsValid)
             {
-
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();          
-                    return RedirectToAction("Index", "Groups");
- 
-               
+                ApplicationUser user = UserManager.FindById(model.Id);
+                user.Name = model.Name;
+                user.Personnumber = model.Personnumber;
+                UserManager.Update(user);
+                return RedirectToAction("Index", "Groups");
             }
             return View();
         }
