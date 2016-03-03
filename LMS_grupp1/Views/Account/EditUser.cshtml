@@ -1,13 +1,11 @@
 ﻿@model LMS_grupp1.Models.ApplicationUser
-
 @{
-    ViewBag.Title = "EditUser";
+    ViewBag.Title = "Ändra användaruppgifter";
 }
+<h2>Ändra användaruppgifter</h2>
 
-<h2>EditUser</h2>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     

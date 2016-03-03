@@ -18,9 +18,10 @@ namespace LMS_grupp1.Controllers
         public ViewResult Index(int? id)
 
         {
-            //// Code below to return only the activities that related to choosen course id
-            return View(db.Activities.Where(a => a.CourseId == id).ToList());
-
+            // Code below to return only the activities that related to choosen course id
+            //return View(db.Activities.Where(a => a.CourseId == id).ToList());
+            Course course = db.Courses.Find(id);
+            return View(course);
           }
 
         // GET: Activities/Details/5

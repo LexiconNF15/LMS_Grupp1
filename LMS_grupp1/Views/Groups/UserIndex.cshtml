@@ -15,7 +15,6 @@
 <div>
     <h4>Deltagarlista</h4>
     <hr />
-
 </div>
 <table class="table">
     <tr>
@@ -28,7 +27,7 @@
         <th>
             @Html.DisplayName("Telefonnummer")
         </th>
-    </tr>
+    </tr> 
     @foreach (var item in Model.Users)
     {
         <tr>
@@ -43,12 +42,12 @@
             </td>
 
             @if (User.IsInRole("Teacher"))
-                {
+            {
                 <td>
-                    @Html.ActionLink("Ändra deltagaruppgift", "Edit", "Account", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort deltagare", "Delete", "Account", new { id = item.Id }, null)
+                    @Html.ActionLink("Ändra deltagaruppgift", "EditUser", "Account", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null)
                 </td>
-                }
+            }
 
         </tr>
     }
