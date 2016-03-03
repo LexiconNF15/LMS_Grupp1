@@ -74,30 +74,31 @@ namespace LMS_grupp1.Migrations
 
                     //var studentUser = userManager.FindByName("Nils@Persson.se");
                     //userManager.AddToRole(studentUser.Id, "Student");
-
-
-                    context.Groups.AddOrUpdate(
-                        p => p.Name,
-                         new Group
-                         {
-                             Name = ".NET November",
-                             StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
-                         },
-                         new Group
-                         {
-                             Name = "Java Februari",
-                             StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
-                         },
-                         new Group
-                         {
-                             Name = ".NET September",
-                             StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
-                         }
-        );
                 }
+
+
+            context.Groups.AddOrUpdate(
+                p => p.Name,
+                 new Group
+                 {
+                     Name = ".NET November",
+                     StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
+                 },
+                 new Group
+                 {
+                     Name = "Java Februari",
+                     StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
+                 },
+                 new Group
+                 {
+                     Name = ".NET September",
+                     StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                 }
+            );
+
         }
     }
 }
