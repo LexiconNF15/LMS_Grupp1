@@ -1,0 +1,57 @@
+﻿@model LMS_grupp1.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Ta bort användare";
+}
+
+<h2>Ta bort användare</h2>
+
+<h3>Är du säker på att du vill ta bort användaren?</h3>
+<div>
+    <h4>Användare</h4>
+    <hr />
+    <dl class="dl-horizontal">
+ 
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Personnumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Personnumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till lista", "UserIndex")
+        </div>
+    }
+</div>
