@@ -123,6 +123,14 @@ namespace LMS_grupp1.Migrations
                     //var studentUser = userManager.FindByName("Nils@Persson.se");
                     //userManager.AddToRole(studentUser.Id, "Student");
                 }
+                else
+                {
+                    var user = userManager.FindByEmail(seedUser.Email);
+                    user.Personnumber = seedUser.Personnumber;
+                    user.PhoneNumber = seedUser.PhoneNumber;
+                    user.Name = seedUser.Name;
+                    user.GroupId = seedUser.GroupId;
+                }
 
 
             context.Groups.AddOrUpdate(

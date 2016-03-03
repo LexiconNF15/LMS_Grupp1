@@ -196,11 +196,13 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteUser(string userId)
+       public async Task<ActionResult> DeleteUser(string userId)
+           // public ActionResult DeleteUser(string userId)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser user = await UserManager.FindByEmailAsync(userId);
+                 // ApplicationUser user = db.Users.Find(userId);
                 if (user == null)
                 {
                     return View("Error");
@@ -218,13 +220,13 @@ namespace LMS_grupp1.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Teacher")]
+        [AllowAnonymous]
         public ActionResult EditUser(ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
 
-                db.Entry(User).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();          
                     return RedirectToAction("Index", "Groups");
  
