@@ -28,6 +28,8 @@ namespace LMS_grupp1.Models
         [DisplayName("Grupp")]
         public int GroupId { get; set; }
 
+
+        public virtual ICollection<Activity> Activities { get; set; }
         public virtual Group Group { get; set; }
     }
 }

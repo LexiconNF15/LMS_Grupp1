@@ -27,7 +27,7 @@ namespace LMS_grupp1.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndTime { get; set; }
 
-        [DisplayName("Kurs Namn")]
+       
         public int CourseId { get; set; }
 
         public virtual Course Course { get; set; }

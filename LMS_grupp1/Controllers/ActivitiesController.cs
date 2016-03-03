@@ -16,12 +16,13 @@ namespace LMS_grupp1.Controllers
 
         // GET: Activities
         public ViewResult Index(int? id)
-
         {
             //// Code below to return only the activities that related to choosen course id
-            return View(db.Activities.Where(a => a.CourseId == id).ToList());
+            Course course = db.Courses.Find(id);
 
-          }
+            return View(course);
+
+        }
 
         // GET: Activities/Details/5
         public ActionResult Details(int? id)
@@ -39,11 +40,11 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Activities/Create
-        public ActionResult Create()
+        public ActionResult Create(int? courseId)
         {
-            // A Group Id list to get a drop down list in a create course page
-            ViewBag.CourseIdLst = new SelectList(db.Courses, "Id", "Name");
+            ViewBag.CourseId = courseId;
             return View();
+
         }
 
         // POST: Activities/Create
@@ -51,13 +52,13 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartTime,EndTime,CourseId")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,StartTime,EndTime, CourseId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = activity.CourseId});
             }
 
             return View(activity);
