@@ -210,8 +210,7 @@ namespace LMS_grupp1.Controllers
             return View();
         }
 
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles="Teacher")]
         public ActionResult EditUser(string id)
         {
             ApplicationUser user = db.Users.Find(id);
@@ -219,8 +218,7 @@ namespace LMS_grupp1.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult EditUser(ApplicationUser user)
         {
             if (ModelState.IsValid)
