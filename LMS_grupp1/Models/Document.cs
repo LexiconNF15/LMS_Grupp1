@@ -28,6 +28,8 @@ namespace LMS_grupp1.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? Deadline { get; set; }
 
+        public string LocationUrl { get; set; }
+
         [DisplayName("Dokumenttyp")]
         public int TypeId { get; set; }
         public virtual DocumentType DocumentType { get; set; }
