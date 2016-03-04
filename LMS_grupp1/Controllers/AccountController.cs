@@ -240,6 +240,29 @@ namespace LMS_grupp1.Controllers
             }
             return View();
         }
+
+        [Authorize(Roles= "Teacher")]
+        public ActionResult MoveUser(string id)
+        {
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
+            ApplicationUser user = db.Users.Find(id);
+            return View(user);
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public ActionResult MoveUser(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = UserManager.FindById(model.Id);
+                user.GroupId = model.GroupId;
+                UserManager.Update(user);
+                return RedirectToAction("UserIndex", "Groups");
+            }
+            return View();
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

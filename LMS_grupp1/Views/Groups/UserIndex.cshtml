@@ -45,7 +45,8 @@
             {
                 <td>
                     @Html.ActionLink("Ändra deltagaruppgift", "EditUser", "Account", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null)
+                    @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null) |
+                    @Html.ActionLink("Flytta deltagare", "MoveUser", "Account", new { id = item.Id }, null)
                 </td>
             }
 
