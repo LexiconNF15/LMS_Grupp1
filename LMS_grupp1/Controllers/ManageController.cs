@@ -55,12 +55,12 @@ namespace LMS_grupp1.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Ditt lösenord har ändrats."
+                : message == ManageMessageId.SetPasswordSuccess ? "Ditt lösenord är satt."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Din tvåstegsautentisering är satt."
+                : message == ManageMessageId.Error ? "Ett fel har inträffat."
+                : message == ManageMessageId.AddPhoneSuccess ? "Ditt telefonnummer har lagts till."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Ditt telefonnummer har tagits bort."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -190,7 +190,7 @@ namespace LMS_grupp1.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Failed to verify phone");
+            ModelState.AddModelError("", "Telefonverifiering gick fel.");
             return View(model);
         }
 
@@ -279,8 +279,8 @@ namespace LMS_grupp1.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.RemoveLoginSuccess ? "Den externa loginmöjligheten har tagits bort."
+                : message == ManageMessageId.Error ? "Ett fel har inträffat."
                 : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)

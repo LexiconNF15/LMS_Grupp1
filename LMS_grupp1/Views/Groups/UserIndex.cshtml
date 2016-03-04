@@ -15,40 +15,39 @@
 <div>
     <h4>Deltagarlista</h4>
     <hr />
-
 </div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Användarnamn")
+            @Html.DisplayName("E-post")
         </th>
         <th>
-            @Html.DisplayName("Personnummmer")
+            @Html.DisplayName("Namn")
         </th>
         <th>
-            @Html.DisplayName("Telefonnummer")
+            @Html.DisplayName("Personnummer")
         </th>
-    </tr>
+    </tr> 
     @foreach (var item in Model.Users)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Personnumber)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
 
             @if (User.IsInRole("Teacher"))
-                {
+            {
                 <td>
-                    @Html.ActionLink("Ändra deltagaruppgift", "Edit", "Account", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort deltagare", "Delete", "Account", new { id = item.Id }, null)
+                    @Html.ActionLink("Ändra deltagaruppgift", "EditUser", "Account", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null)
                 </td>
-                }
+            }
 
         </tr>
     }
