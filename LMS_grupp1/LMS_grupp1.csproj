@@ -160,11 +160,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Interval.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -209,9 +211,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -233,17 +232,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Groups\GroupCreate.cshtml" />
-    <Content Include="Views\Groups\GroupDelete.cshtml" />
+    <Content Include="Views\Groups\Create.cshtml" />
+    <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\UserIndex.cshtml" />
-    <Content Include="Views\Groups\GroupEdit.cshtml" />
+    <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\GroupIndex.cshtml" />
     <Content Include="Views\Groups\CourseIndex.cshtml" />
-    <Content Include="Views\Groups\CourseCreate.cshtml" />
-    <Content Include="Views\Groups\CourseDelete.cshtml" />
-    <Content Include="Views\Groups\CourseDetails.cshtml" />
-    <Content Include="Views\Groups\CourseEdit.cshtml" />
-    <Content Include="Views\Groups\StudentIndex.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />
     <Content Include="Views\Activities\Delete.cshtml" />
@@ -252,9 +246,15 @@
     <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />
     <Content Include="Views\Account\DeleteUser.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Document\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

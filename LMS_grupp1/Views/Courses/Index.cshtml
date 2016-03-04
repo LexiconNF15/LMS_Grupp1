@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LMS_grupp1.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h4>Kurser</h4>
+
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Lägg till kurs", "Create", new { groupId = Model.First().GroupId })
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            @if (User.IsInRole("Teacher"))
+            {
+                <td>
+                    @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, null) |
+                    @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, null)
+                </td>
+            }
+            else
+            {
+                @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null)
+            }
+        </tr>
+    }
+
+</table>

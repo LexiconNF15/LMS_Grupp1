@@ -1,15 +1,16 @@
 ﻿@model LMS_grupp1.Models.Course
 
 @{
-    ViewBag.Title = "Radera kurs";
+    ViewBag.Title = "Ta bort Kurs";
 }
 
-<h2>Radera kurs</h2>
+<h2>Ta bort kurs</h2>
 
-<h3>Vill du verkligen ta bort denna kurs?</h3>
+<h3>Är du säker på att du vill ta bort denna?</h3>
 <div>
     <h4>Kursuppgifter</h4>
     <hr />
+    @Html.HiddenFor(model => model.GroupId)
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -42,14 +43,15 @@
         <dd>
             @Html.DisplayFor(model => model.EndTime)
         </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="OK" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till kurslista", "Index")
+            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till grupp", "Index", "Groups", new { id = Model.GroupId}, null)
         </div>
     }
 </div>

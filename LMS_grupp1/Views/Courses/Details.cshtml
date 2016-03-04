@@ -1,13 +1,13 @@
 ﻿@model LMS_grupp1.Models.Course
 
 @{
-    ViewBag.Title = "Kursinnehåll";
+    ViewBag.Title = "Details";
 }
 
-<h2>Kursinnehåll</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>Kurs</h4>
+    <h4>Course</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -42,20 +42,9 @@
             @Html.DisplayFor(model => model.EndTime)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Group.Name)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @if (User.IsInRole("Teacher"))
-    {
-        @Html.ActionLink("Ändra", "CourseEdit", new { id = Model.Id }) @:|
-    }
-    @Html.ActionLink("Tillbaka till kurser", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
