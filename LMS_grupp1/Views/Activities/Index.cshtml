@@ -1,62 +1,70 @@
-﻿@model IEnumerable<LMS_grupp1.Models.Activity>
+﻿@model LMS_grupp1.Models.Course
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Aktiviteter på kurs";
 }
 
-<h2>Index</h2>
+<h2>Aktiviteter på kurs: @Model.Name</h2>
+<h4>Period:  @Html.DisplayFor(model => model.StartTime) -  @Html.DisplayFor(model => model.EndTime)</h4> <hr/>
+    
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Lägg till aktivitet", "Create", new { CourseId = Model.Id }) |
+        @Html.ActionLink("Ändra kursuppgifter", "CourseEdit", "Groups", new { id = Model.Id }, null)
+    </p>
+     
+}
+    @Html.HiddenFor(model => model.Id)
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </th>
-        <th></th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Aktiveteterinnehåll", "Details", new { id = item.Id }) |
-        </td>
-        @if (User.IsInRole("Teacher"))
-        { 
-        <td>
-            @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Ta bort", "Delete", new { id=item.Id })
-        </td>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Activities)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Aktiveteterinnehåll", "Details", new { id = item.Id }) 
+                
+                @if (User.IsInRole("Teacher"))
+                {
+                    @: |
+                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) @:|
+                    @Html.ActionLink("Ta bort", "Delete", new { id = item.Id }) @:|
+                    @Html.ActionLink("Lädda up", "")
+                }
+               </td>
+            </tr>
         }
-    </tr>
-}
+    
+    </table>
 
-</table>
+
+

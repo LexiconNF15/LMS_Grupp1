@@ -10,6 +10,7 @@
 <div>
     <h4>Activity</h4>
     <hr />
+    
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -43,22 +44,14 @@
             @Html.DisplayFor(model => model.EndTime)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseId)
-        </dd>
-
-    </dl>
-
+        </dl>
+   
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Tillbaka till aktiveteterlista", "Index")
         </div>
     }
 </div>
