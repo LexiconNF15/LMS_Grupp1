@@ -104,7 +104,13 @@ namespace LMS_grupp1.Migrations
                     Name = "Anneli Fredriksson",
                     Personnumber = "010120-1262",
                     PhoneNumber = "070-753159",
-                    GroupId = 3}
+                    GroupId = 3},
+                new {Email = "Richard@Andersson.se", 
+                    Role= "Student",
+                    Name = "Richard Andersson",
+                    Personnumber = "010120-1212",
+                    PhoneNumber = "070-12589",
+                    GroupId = 1}
 
             
             };
@@ -137,22 +143,107 @@ namespace LMS_grupp1.Migrations
                 p => p.Name,
                  new Group
                  {
+                     Id = 1,
                      Name = ".NET November",
                      StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
                      EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
                  },
                  new Group
                  {
+                     Id = 2,
                      Name = "Java Februari",
                      StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
                      EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
                  },
                  new Group
                  {
+                     Id = 3,
                      Name = ".NET September",
                      StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
                      EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
                  }
+            );
+
+            context.Courses.AddOrUpdate(
+                k => k.Name,
+                 new Course
+                 {
+                     Id = 1,
+                     GroupId = 1,
+                     Description = "Kurs för programmerare.",
+                     Name = "C# .NET ",
+                     StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
+                 },
+                 new Course
+                 {
+                     Id = 2,
+                     GroupId = 2,
+                     Description = "Kurs för Java-programmerare.",
+                     Name = "Java ",
+                     StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
+                 },
+                 new Course
+                 {
+                     Id = 3,
+                     GroupId = 3,
+                     Description = "Kurs för It-tekniker.",
+                     Name = "It-Teknik",
+                     StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                 }
+            );
+            context.Activities.AddOrUpdate(
+                a => a.Name,
+                new Activity
+                {
+                    CourseId = 1,
+                    Description = "Lära ut C#",
+                    Name = "C#",
+                    StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
+                },
+                new Activity
+                {
+                    CourseId = 1,
+                    Description = "Att lära ut .NET4.5",
+                    Name = ".NET4.5",
+                    StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
+                },
+                new Activity
+                {
+                    CourseId = 2,
+                    Description = "Grundläggande Java",
+                    Name = "Java Grund",
+                    StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                },
+                new Activity
+                {
+                    CourseId = 2,
+                    Description = "Avancerad Java",
+                    Name = "Java Avancerad",
+                    StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                },
+                new Activity
+                {
+                    CourseId = 3,
+                    Description = "Itil för IT-tekniker",
+                    Name = "Itil",
+                    StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                },
+                new Activity
+                {
+                    CourseId = 3,
+                    Description = "SharePoint för IT-tekniker",
+                    Name = "Sharepoint",
+                    StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                    EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                }
             );
 
         }
