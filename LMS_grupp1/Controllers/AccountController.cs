@@ -213,9 +213,11 @@ namespace LMS_grupp1.Controllers
                 {
                     return View("Error");
                 }
-                var id = user.GroupId;
                 var result = UserManager.Delete(user);
-                return RedirectToAction ("Index", "Groups", new { groupId = model.Id} );
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Groups", new { groupId = model.Id });
+                }
             }
             return View();
         }
