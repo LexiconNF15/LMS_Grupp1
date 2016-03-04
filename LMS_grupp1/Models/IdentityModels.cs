@@ -37,14 +37,11 @@ namespace LMS_grupp1.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<Document> Documents { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
 
-
-        public System.Collections.IEnumerable AspNetUserRoles { get; set; }
-
-        public System.Collections.IEnumerable AspNetRoles { get; set; }
-
-        public System.Data.Entity.DbSet<LMS_grupp1.Models.Activity> Activities { get; set; }
     }
 }

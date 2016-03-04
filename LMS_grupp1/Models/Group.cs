@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace LMS_grupp1.Models
 {
@@ -23,5 +26,6 @@ namespace LMS_grupp1.Models
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

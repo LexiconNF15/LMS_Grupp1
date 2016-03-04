@@ -51,12 +51,60 @@ namespace LMS_grupp1.Migrations
 
 
             var seedUsers = new[] { 
-                new {Email = "Kalle@Urbom.se", Role= "Teacher"},
-                new {Email = "Nils@Persson.se", Role= "Student"},
-                new {Email = "Alice@Eriksson.se", Role= "Student"},
-                new {Email = "Anna@Ulfsdotter.se", Role= "Student"},
-                new {Email = "Orvar@Framsteg.se", Role= "Student"},
-                new {Email = "Tore@Pettersson.se", Role= "Teacher"}
+                new {Email = "Kalle@Urbom.se", 
+                    Role= "Teacher",
+                    Name = "Kalle Urbom",
+                    Personnumber = "520720-1212",
+                    PhoneNumber = "070-312345",
+                    GroupId = 1},
+                new {Email = "Nils@Persson.se", 
+                    Role= "Student",
+                    Name = "Nils Persson",
+                    Personnumber = "020720-1212",
+                    PhoneNumber = "070-123456",
+                    GroupId = 2},
+                new {Email = "Alice@Eriksson.se", 
+                    Role= "Student",
+                    Name = "Alice Eriksson",
+                    Personnumber = "990720-1222",
+                    PhoneNumber = "070-789456",
+                    GroupId = 1},
+                new {Email = "Anna@Ulfsdotter.se", 
+                    Role= "Student",
+                    Name = "Anna Ulfsdotter",
+                    Personnumber = "980720-1212",
+                    PhoneNumber = "070-456123",
+                    GroupId = 2},
+                new {Email = "Orvar@Framsteg.se", 
+                    Role= "Student",
+                    Name = "Orvar Framsteg",
+                    Personnumber = "990712-1212",
+                    PhoneNumber = "070-789123",
+                    GroupId = 2},
+                new {Email = "Tore@Pettersson.se", 
+                    Role= "Teacher",
+                    Name = "Tore Pettersson",
+                    Personnumber = "640720-1212",
+                    PhoneNumber = "070-123852",
+                    GroupId = 2},
+                new {Email = "Ulrika@Vargtass.se", 
+                    Role= "Teacher",
+                    Name = "Ulrika Vargtass",
+                    Personnumber = "580720-1242",
+                    PhoneNumber = "070-741258",
+                    GroupId = 3},
+                new {Email = "Frippe@Danielsson.se", 
+                    Role= "Student",
+                    Name = "Fredrik Danielsson",
+                    Personnumber = "000720-1212",
+                    PhoneNumber = "070-852369",
+                    GroupId = 3},
+                new {Email = "Anneli@Fredriksson.se", 
+                    Role= "Student",
+                    Name = "Anneli Fredriksson",
+                    Personnumber = "010120-1262",
+                    PhoneNumber = "070-753159",
+                    GroupId = 3}
 
             
             };
@@ -74,30 +122,39 @@ namespace LMS_grupp1.Migrations
 
                     //var studentUser = userManager.FindByName("Nils@Persson.se");
                     //userManager.AddToRole(studentUser.Id, "Student");
-
-
-                    context.Groups.AddOrUpdate(
-                        p => p.Name,
-                         new Group
-                         {
-                             Name = ".NET November",
-                             StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
-                         },
-                         new Group
-                         {
-                             Name = "Java Februari",
-                             StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
-                         },
-                         new Group
-                         {
-                             Name = ".NET September",
-                             StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
-                             EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
-                         }
-        );
                 }
+                else
+                {
+                    var user = userManager.FindByEmail(seedUser.Email);
+                    user.Personnumber = seedUser.Personnumber;
+                    user.PhoneNumber = seedUser.PhoneNumber;
+                    user.Name = seedUser.Name;
+                    user.GroupId = seedUser.GroupId;
+                }
+
+
+            context.Groups.AddOrUpdate(
+                p => p.Name,
+                 new Group
+                 {
+                     Name = ".NET November",
+                     StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
+                 },
+                 new Group
+                 {
+                     Name = "Java Februari",
+                     StartTime = DateTime.ParseExact("02/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("05/18/2016", "d", provider)
+                 },
+                 new Group
+                 {
+                     Name = ".NET September",
+                     StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                     EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
+                 }
+            );
+
         }
     }
 }
