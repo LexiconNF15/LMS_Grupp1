@@ -1,14 +1,14 @@
 ﻿@model LMS_grupp1.Models.Activity
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Ta bort aktivitet";
 }
 
-<h2>Delete</h2>
+<h2>Ta bort aktivitet</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Activity</h4>
+    <h4>Aktivitetsuppgifter</h4>
     <hr />
     
     <dl class="dl-horizontal">
@@ -50,8 +50,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till aktiveteterlista", "Index")
+            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till aktivitetslista", "Details", "Courses", new { id = Model.CourseId}, null)
         </div>
     }
 </div>

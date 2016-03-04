@@ -214,10 +214,7 @@ namespace LMS_grupp1.Controllers
                     return View("Error");
                 }
                 var result = UserManager.Delete(user);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Groups", new { groupId = model.Id });
-                }
+                return RedirectToAction ("UserIndex", "Groups", new { groupId = model.Id} );
             }
             return View();
         }
@@ -239,7 +236,7 @@ namespace LMS_grupp1.Controllers
                 user.Name = model.Name;
                 user.Personnumber = model.Personnumber;
                 UserManager.Update(user);
-                return RedirectToAction("Index", "Groups");
+                return RedirectToAction("UserIndex", "Groups");
             }
             return View();
         }

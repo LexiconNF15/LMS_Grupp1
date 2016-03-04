@@ -105,7 +105,7 @@ namespace LMS_grupp1.Controllers
 
         // GET: Groups/Create
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupCreate()
+        public ActionResult Create()
         {
             return View();
         }
@@ -116,7 +116,7 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupCreate([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
+        public ActionResult Create([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace LMS_grupp1.Controllers
 
         // GET: Groups/Edit/5
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupEdit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -150,7 +150,7 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupEdit([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
+        public ActionResult Edit([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -163,7 +163,7 @@ namespace LMS_grupp1.Controllers
 
         // GET: Groups/Delete/5
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupDelete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -178,112 +178,18 @@ namespace LMS_grupp1.Controllers
         }
 
         // POST: Groups/Delete/5
-        [HttpPost, ActionName("GroupDelete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult GroupDeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Group group = db.Groups.Find(id);
+            foreach (var course in group.Courses)
+            {
+                     db.Activities.RemoveRange(course.Activities);
+            }
+            db.Courses.RemoveRange(group.Courses);
             db.Groups.Remove(group);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        // GET: Courses/Details/5
-        public ActionResult CourseDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return RedirectToAction("Index", "Activities", course);
-        }
-
-        // GET: Courses/Create
-        public ActionResult CourseCreate(int groupId)
-        {
-            // A Group Id list to get a drop down list in a create course page
-            // ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
-            ViewBag.GroupId = groupId;
-            return View();
-
-        }
-
-        // POST: Courses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CourseCreate([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
-
-        // GET: Courses/Edit/5
-        public ActionResult CourseEdit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Courses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CourseEdit([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(course);
-        }
-
-        // GET: Courses/Delete/5
-        public ActionResult CourseDelete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Courses/Delete/5
-        [HttpPost, ActionName("CourseDelete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult CourseDeleteConfirmed(int id)
-        {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

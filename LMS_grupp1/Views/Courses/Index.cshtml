@@ -1,4 +1,11 @@
-﻿@model IEnumerable<LMS_grupp1.Models.Activity>
+﻿@model IEnumerable<LMS_grupp1.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h4>Kurser</h4>
+
 
 <table class="table">
     <tr>
@@ -14,7 +21,6 @@
         <th>
             @Html.DisplayNameFor(model => model.EndTime)
         </th>
-
         <th></th>
     </tr>
 
@@ -36,13 +42,18 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, null) |
+                    @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, null)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null)
                 </td>
             }
         </tr>
     }
+
 </table>
-
-
-
