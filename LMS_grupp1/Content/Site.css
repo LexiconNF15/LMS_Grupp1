@@ -22,3 +22,77 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Added by ps1230. Talk to him before changing.*/
+.glyph-lg {
+    padding:0 10px 0 10px;
+    font-size: 14px;
+    color: white;
+}
+
+.glyph-comb-lg {
+    padding:0 0 0 10px;
+    font-size: 14px;
+    color: white;
+}
+
+.glyph-add-norm {
+    padding:0 10px 0 0;
+    font-size: 12px;
+    color: white;
+}
+
+.btn-thin {
+    padding: 2px 12px 2px 12px;
+}
+
+.btn-comb-thin {
+    padding: 2px 4px 2px 4px;
+}
+
+.btn-own {
+  color: #ffffff;
+  background-color: #bbbbbb;
+  border-color: #bbbbbb;
+}
+
+.btn-own:hover {
+  color: #ffffff;
+  background-color: #898989;
+  border-color: #898989;
+}
+.btn-own:focus,
+.btn-own:active,
+.btn-own.active,
+.open .dropdown-toggle.btn-own {
+  color: #ffffff;
+  background-color: #676767;
+  border-color: #676767;
+}
+
+.btn-own:active,
+.btn-own.active,
+.open .dropdown-toggle.btn-own {
+  background-image: none;
+}
+
+.btn-own.disabled,
+.btn-own[disabled],
+fieldset[disabled] .btn-own,
+.btn-own.disabled:hover,
+.btn-own[disabled]:hover,
+fieldset[disabled] .btn-own:hover,
+.btn-own.disabled:focus,
+.btn-own[disabled]:focus,
+fieldset[disabled] .btn-own:focus,
+.btn-own.disabled:active,
+.btn-own[disabled]:active,
+fieldset[disabled] .btn-own:active,
+.btn-own.disabled.active,
+.btn-own[disabled].active,
+fieldset[disabled] .btn-own.active {
+  background-color: #ffffff;
+  border-color: #ededed;
+}
+
+/* Here is the end.*/

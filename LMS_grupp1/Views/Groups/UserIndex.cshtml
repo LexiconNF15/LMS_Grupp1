@@ -8,8 +8,16 @@
 @if (User.IsInRole("Teacher"))
 {
     <p>
-        @Html.ActionLink("Lägg till deltagare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) |
-        @Html.ActionLink("Lämna som lärare", "RemoveTeacher")
+        @* @Html.ActionLink("Lägg till deltagare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) |*@
+        <a href="@Url.Action("Register", "Account", new { id = "registerLink" })" class="btn btn-own btn-comb-thin">
+            <span class="glyphicon glyphicon-user glyph-comb-lg" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
+        </a> 
+        @*@@Html.ActionLink("Lämna som lärare", "RemoveTeacher") *@
+        <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin">
+            <span class="glyphicon glyphicon-briefcase glyph-comb-lg" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-share-alt glyph-add-norm" aria-hidden="true"></span>
+        </a>
     </p>
 }
 <div>
@@ -18,6 +26,7 @@
 </div>
 <table class="table">
     <tr>
+
         <th>
             @Html.DisplayName("E-post")
         </th>
@@ -27,7 +36,7 @@
         <th>
             @Html.DisplayName("Personnummer")
         </th>
-    </tr> 
+    </tr>
     @foreach (var item in Model.Users)
     {
         <tr>
@@ -44,22 +53,40 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra deltagaruppgift", "EditUser", "Account", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null) |
-                    @Html.ActionLink("Flytta deltagare", "MoveUser", "Account", new { id = item.Id }, null)
+                    @* @Html.ActionLink("Ändra deltagaruppgift", "EditUser", "Account", new { id = item.Id }, null) | *@
+                    <a href="@Url.Action("EditUser", "Account", new { id = item.Id})" class="btn btn-own btn-thin">
+                        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+                    </a>
+                    @if (item.Email != User.Identity.Name)
+                    {
+                        @* @Html.ActionLink("Ta bort deltagare", "DeleteUser", "Account", new { id = item.Id }, null) | *@
+                        <a href="@Url.Action("DeleteUser", "Account", new { id = item.Id })" class="btn btn-own btn-thin">
+                            <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
+                        </a>
+                        @* @Html.ActionLink("<span class="glyphicon glyphicon-king"></span>", "MoveUser", "Account", new { id = item.Id }, null) *@
+                        <a href="@Url.Action("MoveUser", "Account", new { id = item.Id })" class="btn btn-own btn-thin">
+                            <span class="glyphicon glyphicon-share-alt glyph-lg" aria-hidden="true"></span>
+                        </a>
+                    }
                 </td>
             }
 
         </tr>
     }
 </table>
-<p></p>
+<p>
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("Ändra gruppuppgifter", "GroupEdit", new { id = Model.Id }) @:|
-        @Html.ActionLink("Tillbaka till kurssida", "Index")
-     }
-     else
+        @*@Html.ActionLink("Tillbaka till kurssida", "Index")*@
+        <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+            <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
+        </a>
+        @* @Html.ActionLink("Ändra gruppuppgifter", "Edit", new { id = Model.Id }) *@
+        <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+            <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+        </a>
+    }
+    else
     {
         @Html.ActionLink("Tillbaka till kurssida", "Index")
     }

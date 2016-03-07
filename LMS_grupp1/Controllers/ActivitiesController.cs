@@ -51,13 +51,11 @@ namespace LMS_grupp1.Controllers
                                         lastActivity.EndTime.Month,
                                         lastActivity.EndTime.Day);
                 }
-                if (time.DayOfWeek == DayOfWeek.Friday)
+                activity.StartTime = time;
+
+                if (activity.EndTime > activity.StartTime.AddDays(5.0))
                 {
-                    activity.StartTime = time.AddDays(3.0);
-                }
-                else
-                {
-                    activity.StartTime = time.AddDays(1.0);
+                    activity.EndTime = time.AddDays(5.0);
                 }
             }
             return View(activity);

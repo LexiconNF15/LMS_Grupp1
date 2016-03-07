@@ -46,12 +46,21 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till grupp", "Index", "Groups", new { id = Model.GroupId}, null)
+            <a href="@Url.Action("Index", "Groups", new { id = Model.GroupId })" class="btn btn-own btn-thin">
+                <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
+            </a>
+            <button type="submit" class="btn btn-own btn-thin">
+                <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
+            </button>
+            @*
+                <input type="submit" value="Ta bort" class="btn btn-default" /> |
+                @Html.ActionLink("Tillbaka till grupp", "Index", "Groups", new { id = Model.GroupId}, null)
+            *@
         </div>
     }
 </div>

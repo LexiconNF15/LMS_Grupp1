@@ -47,12 +47,12 @@ namespace LMS_grupp1.Controllers
 
 
         [Authorize(Roles = "Teacher")]
-        public ActionResult AddTeacher(int groupId)
+        public ActionResult AddTeacher(int id)
         {
             var teacher = db.Users
                 .Where(u => u.Email == User.Identity.Name)
                 .First();
-            teacher.GroupId = groupId;
+            teacher.GroupId = id;
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -107,7 +107,10 @@ namespace LMS_grupp1.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
-            return View();
+            Group group = new Group();
+            group.StartTime = DateTime.Now;
+            group.EndTime = group.StartTime.AddDays(90.0);
+            return View(group);
         }
 
         // POST: Groups/Create
@@ -118,6 +121,21 @@ namespace LMS_grupp1.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
+            if (group.StartTime < DateTime.Now)
+            {
+                ModelState.AddModelError("StartTime", "Gruppens startid har passerats.");
+            }
+            if (group.EndTime < DateTime.Now)
+            {
+                ModelState.AddModelError("EndTime", "Gruppens sluttid har passerats.");
+            }
+            else
+            {
+                if (group.StartTime > group.EndTime)
+                {
+                    ModelState.AddModelError("StartTime", "Gruppens sluttid är mindre än starttid");
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Groups.Add(group);

@@ -65,13 +65,11 @@ namespace LMS_grupp1.Controllers
                                         lastCourse.EndTime.Month,
                                         lastCourse.EndTime.Day);
                 }
-                if (time.DayOfWeek == DayOfWeek.Friday)
+                course.StartTime = time;
+
+                if (course.EndTime > course.StartTime.AddDays(5.0))
                 {
-                    course.StartTime = time.AddDays(3.0);
-                }
-                else
-                {
-                    course.StartTime = time.AddDays(1.0);
+                    course.EndTime = time.AddDays(5.0);
                 }
             }
             return View(course);
@@ -180,7 +178,7 @@ namespace LMS_grupp1.Controllers
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Group", new { id = course.GroupId });
+                return RedirectToAction("Index", "Groups", new { id = course.GroupId });
             }
             return View(course);
         }

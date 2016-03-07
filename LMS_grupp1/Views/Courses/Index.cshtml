@@ -10,6 +10,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayName("Välj")
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -23,10 +26,18 @@
         </th>
         <th></th>
     </tr>
+    @{
+        DateTime now = DateTime.Now;
+    }
 
     @foreach (var item in Model)
     {
         <tr>
+            <td> 
+                <a href="@Url.Action("Details", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                    <span @(now > item.StartTime && now < item.EndTime ? "style=\"background : #ff0000\"" : "style=\"background : white\"") class="glyphicon glyphicon-arrow-down glyph-lg" aria-hidden="true"></span>
+                </a>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -42,15 +53,17 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, null) |
-                    @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, null)
-                </td>
-            }
-            else
-            {
-                <td>
-                    @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null)
+                    <a href="@Url.Action("Edit", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Delete", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                        <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
+                    </a>
+                    @*
+                        @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, null) |
+                        @Html.ActionLink("Kursinnehåll", "Details", "Courses", new { id = item.Id }, null) |
+                        @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, null)
+                    *@
                 </td>
             }
         </tr>

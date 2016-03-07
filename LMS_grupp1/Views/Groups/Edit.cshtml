@@ -43,14 +43,19 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
+                <button type="submit" class="btn btn-own btn-thin">
+                    <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Index")
+    @* @Html.ActionLink("Tillbaka", "Index") *@
+    <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+        <span class="glyphicon glyphicon-arrow-left glyph-lg" aria-hidden="true"></span>
+    </a>
 </div>
 
 @section Scripts {

@@ -1,11 +1,8 @@
 ﻿@model LMS_grupp1.Models.Group
-
 @{
     ViewBag.Title = "Ta bort grupp";
 }
-
 <h2>Ta bort grupp</h2>
-
 <h3>Är du säker på att du vill ta bort den här gruppen?</h3>
 <div>
     <h4>Grupp</h4>
@@ -14,19 +11,25 @@
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
     </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka", "Index")
+            <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+                <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
+            </a>
+            <button type="submit" class="btn btn-own btn-thin">
+                <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
+            </button>
+            @*
+                <input type="submit" value="Ta bort" class="btn btn-default" /> |
+                @Html.ActionLink("Tillbaka", "Index")
+            *@
         </div>
     }
 </div>
