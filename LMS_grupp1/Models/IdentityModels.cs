@@ -46,6 +46,5 @@ namespace LMS_grupp1.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
-
     }
 }
