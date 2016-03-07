@@ -1,0 +1,35 @@
+﻿@model LMS_grupp1.Models.Course
+
+@{
+    ViewBag.Title = "Aktiviteter på kurs";
+}
+<div>
+    <h2>Aktiviteter på kurs: @Model.Name</h2>
+</div>
+<div>
+    <h4>Period:  @Html.DisplayFor(model => model.StartTime) -  @Html.DisplayFor(model => model.EndTime)</h4> <hr />
+</div>
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Lägg till aktivitet", "Create", "Activities", new { courseId = Model.Id }, null)
+    </p>
+
+}
+@Html.Action("Index", "Activities", new { courseId = Model.Id})
+
+<div>
+    @Html.ActionLink("Tillbaka till kurslista", "Index", "Groups", new { id = Model.GroupId }, null)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+

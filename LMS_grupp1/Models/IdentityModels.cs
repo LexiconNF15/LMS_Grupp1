@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace LMS_grupp1.Models
 {
@@ -18,10 +19,13 @@ namespace LMS_grupp1.Models
         }
 
         // assigned group
+        [Display(Name="Grupp")]
         public int? GroupId { get; set; }
         public virtual Group Group { get; set; }
 
+        [Display(Name="Namn")]
         public string Name { get; set; }
+        [Display(Name="Personnummer")]
         public string Personnumber { get; set; }
     }
 

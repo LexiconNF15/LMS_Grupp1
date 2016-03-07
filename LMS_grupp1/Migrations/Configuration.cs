@@ -145,7 +145,7 @@ namespace LMS_grupp1.Migrations
                  {
                      Id = 1,
                      Name = ".NET November",
-                     StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                     StartTime = DateTime.ParseExact("11/23/2015", "d", provider),
                      EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
                  },
                  new Group
@@ -159,7 +159,7 @@ namespace LMS_grupp1.Migrations
                  {
                      Id = 3,
                      Name = ".NET September",
-                     StartTime = DateTime.ParseExact("08/23/2016", "d", provider),
+                     StartTime = DateTime.ParseExact("08/23/2015", "d", provider),
                      EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
                  }
             );
