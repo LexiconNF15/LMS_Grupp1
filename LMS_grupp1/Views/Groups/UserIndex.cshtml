@@ -13,7 +13,7 @@
             <span class="glyphicon glyphicon-user glyph-comb-lg" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
         </a> 
-        @*@@Html.ActionLink("Lämna som lärare", "RemoveTeacher") *@
+        @* @Html.ActionLink("Lämna som lärare", "RemoveTeacher") *@
         <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin">
             <span class="glyphicon glyphicon-briefcase glyph-comb-lg" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-share-alt glyph-add-norm" aria-hidden="true"></span>
@@ -75,19 +75,15 @@
     }
 </table>
 <p>
-    @if (User.IsInRole("Teacher"))
-    {
         @*@Html.ActionLink("Tillbaka till kurssida", "Index")*@
         <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
             <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
         </a>
+    @if (User.IsInRole("Teacher"))
+    {
         @* @Html.ActionLink("Ändra gruppuppgifter", "Edit", new { id = Model.Id }) *@
         <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
             <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
         </a>
-    }
-    else
-    {
-        @Html.ActionLink("Tillbaka till kurssida", "Index")
     }
 </p>

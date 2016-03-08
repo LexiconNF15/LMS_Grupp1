@@ -68,15 +68,19 @@
         }
     </table>
 }
-@Html.Action("Index", "Courses", new { groupId  = Model.Id})
+@Html.Action("Index", "Courses", new { groupId  = Model.Id})  
 
-@if (User.IsInRole("Teacher"))
-{
-    <p>
+<p>
+    @*@Html.ActionLink("Tillbaka till kurssida", "Index")*@
+    <a href="@Url.Action("UserIndex", "Groups")" class="btn btn-own btn-thin">
+        <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
+    </a>
+    @if (User.IsInRole("Teacher"))
+    {
         @* @Html.ActionLink("Ändra gruppuppgifter", "Edit", new { id = Model.Id }) *@
-        <a href="@Url.Action("Edit", "Groups", new { id = Model.Id})" class="btn btn-own btn-thin">
+        <a href="@Url.Action("Edit", "Groups", new { id = Model.Id })" class="btn btn-own btn-thin">
             <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
         </a>
-    </p>
-}
+    }
+</p>
 
