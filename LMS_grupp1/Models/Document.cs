@@ -31,7 +31,7 @@ namespace LMS_grupp1.Models
         public string LocationUrl { get; set; }
 
         [DisplayName("Dokumenttyp")]
-        public int TypeId { get; set; }
+        public int DocumentTypeId { get; set; }
         public virtual DocumentType DocumentType { get; set; }
 
         [DisplayName("Ansvarig")]
