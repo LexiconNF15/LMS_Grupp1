@@ -43,7 +43,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-own btn-thin">
+                <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Bekräfta">
                     <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
                 </button>
             </div>
@@ -53,7 +53,7 @@
 
 <div>
     @* @Html.ActionLink("Tillbaka", "Index") *@
-    <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+    <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
         <span class="glyphicon glyphicon-arrow-left glyph-lg" aria-hidden="true"></span>
     </a>
 </div>

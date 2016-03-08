@@ -20,10 +20,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin">
+            <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
                 <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
             </a>
-            <button type="submit" class="btn btn-own btn-thin">
+            <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Bekräfta">
                 <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
             </button>
             @*

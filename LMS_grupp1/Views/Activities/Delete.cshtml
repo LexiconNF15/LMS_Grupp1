@@ -54,10 +54,10 @@
             <input type="submit" value="Ta bort" class="btn btn-default" /> |
             @Html.ActionLink("Tillbaka till aktivitetslista", "Details", "Courses", new { id = Model.CourseId}, null)
             *@
-            <a href="@Url.Action("Details", "Courses", new { id = Model.CourseId })" class="btn btn-own btn-thin">
+            <a href="@Url.Action("Details", "Courses", new { id = Model.CourseId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till aktivitetslista">
                 <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
             </a>
-            <button type="submit" class="btn btn-own btn-thin">
+            <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
                 <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
             </button>
         </div>

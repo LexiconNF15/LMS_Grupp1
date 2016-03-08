@@ -8,7 +8,7 @@
 
 <p>
     @* @Html.ActionLink("Lägg till grupp", "GroupCreate") *@
-    <a href="@Url.Action("Create", "Groups")" class="btn btn-own btn-comb-thin">
+    <a href="@Url.Action("Create", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lägg till grupp">
         <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
     </a>
@@ -34,7 +34,7 @@
     {
         <tr>
             <td>
-                <a href="@Url.Action("AddTeacher", "Groups", new { id = item.Id })" class="btn btn-own btn-thin">
+                <a href="@Url.Action("AddTeacher", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Lägg till lärare">
                     <span class="glyphicon glyphicon-briefcase glyph-lg" aria-hidden="true"></span>
                 </a>
             </td>
@@ -48,10 +48,10 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                <a href="@Url.Action("Edit", "Groups", new { id = item.Id })" class="btn btn-own btn-thin">
+                <a href="@Url.Action("Edit", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
                     <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
                 </a>
-                <a href="@Url.Action("Delete", "Groups", new { id = item.Id })" class="btn btn-own btn-thin">
+                <a href="@Url.Action("Delete", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
                     <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
                 </a>
                 @*

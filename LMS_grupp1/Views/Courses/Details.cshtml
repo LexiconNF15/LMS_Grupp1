@@ -13,7 +13,7 @@
 {
     <p>
         @* @Html.ActionLink("Lägg till aktivitet", "Create", "Activities", new { courseId = Model.Id }, null) *@
-        <a href="@Url.Action("Create", "Activities", new { courseId = Model.Id })" class="btn btn-own btn-comb-thin">
+        <a href="@Url.Action("Create", "Activities", new { courseId = Model.Id })" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lägg till aktivitet">
             <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
         </a>
@@ -24,7 +24,7 @@
 
 <div>
     @* @Html.ActionLink("Tillbaka till kurslista", "Index", "Groups", new { id = Model.GroupId }, null) *@
-    <a href="@Url.Action("Index", "Groups", new { id = Model.GroupId })" class="btn btn-own btn-thin">
+    <a href="@Url.Action("Index", "Groups", new { id = Model.GroupId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till kurslista">
         <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
     </a></div>
 
