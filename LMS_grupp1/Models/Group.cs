@@ -16,10 +16,12 @@ namespace LMS_grupp1.Models
         [DisplayName("Benämning")]
         public string Name { get; set; }
 
+        [DataType(DataType.Date)]
         [DisplayName("Startdatum")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartTime { get; set; }
 
+        [DataType(DataType.Date)]
         [DisplayName("Slutdatum")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndTime { get; set; }
