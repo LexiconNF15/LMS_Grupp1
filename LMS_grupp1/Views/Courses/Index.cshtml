@@ -36,7 +36,7 @@
             @if (now <= item.EndTime)
             {
                 <td>
-                    <a href="@Url.Action("Details", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                    <a href="@Url.Action("Details", "Courses" , new { id=item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Till aktivitet">
                         <span class="glyphicon glyphicon-arrow-down glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>
@@ -44,7 +44,7 @@
             else
             {
                 <td>
-                    <a href="@Url.Action("Details", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                    <a href="@Url.Action("Details", "Courses", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Till aktivitet (utdaterad)">
                         <span class="glyphicon glyphicon-asterisk glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>
@@ -64,10 +64,11 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    <a href="@Url.Action("Edit", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
-                        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+                    <a href="@Url.Action("Edit", "Courses", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
+                        <span class=" glyphicon glyphicon-pencil glyph-lg" aria-hidden="true">
+                </span>
                     </a>
-                    <a href="@Url.Action("Delete", "Courses", new { id = item.Id })" class="btn btn-own btn-thin">
+                    <a href="@Url.Action("Delete", "Courses", new { id = item.Id })" class="btn btn-own btn-thin" , data-toggle="tooltip" title="Ta bort">
                         <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
                     </a>
                     @*

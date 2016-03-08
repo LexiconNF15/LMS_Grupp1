@@ -51,7 +51,7 @@
        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-own btn-thin">
+                <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Spara">
                     <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
                 </button>
             </div>
@@ -61,7 +61,7 @@
 
 <div>
    @* @Html.ActionLink("Tillbaka till aktiveteter", "Details", "Courses", new { id = Model.CourseId}, null) *@
-    <a href="@Url.Action("Index", "Groups", new { id = Model.CourseId })" class="btn btn-own btn-thin">
+    <a href="@Url.Action("Index", "Groups", new { id = Model.CourseId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till aktiviteter">
         <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
     </a>
 </div>

@@ -16,12 +16,12 @@
 {
     <p>
         @* @Html.ActionLink("Lägg till kurs", "Create", "Courses", new { groupId = Model.Id }, null) *@
-        <a href="@Url.Action("Create", "Courses", new { groupId = Model.Id })" class="btn btn-own btn-comb-thin">
+        <a href="@Url.Action("Create", "Courses", new { groupId = Model.Id })" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Skapa ny kurs">
             <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
         </a>
         @*@@Html.ActionLink("Lämna som lärare", "RemoveTeacher") *@
-        <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin">
+        <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lämna som lärare">
             <span class="glyphicon glyphicon-briefcase glyph-comb-lg" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-share-alt glyph-add-norm" aria-hidden="true"></span>
         </a>
@@ -32,15 +32,15 @@
 
 <p>
     @*@Html.ActionLink("Tillbaka till kurssida", "Index")*@
-    <a href="@Url.Action("UserIndex", "Groups")" class="btn btn-own btn-thin">
+    <a href="@Url.Action("UserIndex", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till deltagarsida">
         <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
     </a>
     @if (User.IsInRole("Teacher"))
     {
         @* @Html.ActionLink("Ändra gruppuppgifter", "Edit", new { id = Model.Id }) *@
-        <a href="@Url.Action("Edit", "Groups", new { id = Model.Id })" class="btn btn-own btn-thin">
-            <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-        </a>
+    <a href="@Url.Action("Edit", "Groups", new { id = Model.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra gruppuppgift">
+        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+    </a>
     }
 </p>
 
