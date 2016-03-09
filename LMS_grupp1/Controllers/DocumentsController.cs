@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS_grupp1.Models;
+using System.IO;
 
 namespace LMS_grupp1.Controllers
 {
@@ -17,7 +18,7 @@ namespace LMS_grupp1.Controllers
         // GET: Documents
         public ActionResult Index()
         {
-            var documents = db.Documents.Include(d => d.Activity).Include(d => d.Course).Include(d => d.Group);
+            var documents = db.Documents.Include(d => d.Activity).Include(d => d.Course).Include(d => d.DocumentType).Include(d => d.Group);
             return View(documents.ToList());
         }
 
@@ -41,6 +42,7 @@ namespace LMS_grupp1.Controllers
         {
             ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name");
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name");
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
             return View();
         }
@@ -50,18 +52,29 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,TypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,DocumentTypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
         {
+            //Upload a document to document folder
+
             if (ModelState.IsValid)
             {
+                foreach (string upload in Request.Files)
+                {
+                    if (Request.Files[upload].ContentLength == 0) continue;
+                    string pathToSave = Server.MapPath("~/Document/");
+                    string filename = Path.GetFileName(Request.Files[upload].FileName);
+                    Request.Files[upload].SaveAs(Path.Combine(pathToSave, filename));
+                }
+               
                 db.Documents.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
+            //ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
+            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
+            //ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
+            //ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
 
@@ -79,6 +92,7 @@ namespace LMS_grupp1.Controllers
             }
             ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
@@ -88,7 +102,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,TypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,DocumentTypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
         {
             if (ModelState.IsValid)
             {
@@ -98,6 +112,7 @@ namespace LMS_grupp1.Controllers
             }
             ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
+            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
