@@ -7,11 +7,13 @@
 <h2>Grupper</h2>
 
 <p>
-    @* @Html.ActionLink("Lägg till grupp", "GroupCreate") *@
-    <a href="@Url.Action("Create", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lägg till grupp">
-        <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
-    </a>
+    @Html.ActionLink("NY GRUPP", "Create", "Groups", null, new { @class = "btn btn-red" })
+    @*
+        <a href="@Url.Action("Create", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lägg till grupp">
+            <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
+        </a>
+    *@
 </p>
 <table class="table">
     <tr>
@@ -33,10 +35,15 @@
     @foreach (var item in Model)
     {
         <tr>
+            @*
+                <td>
+                    <a href="@Url.Action("AddTeacher", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Lägg till lärare">
+                        <span class="glyphicon glyphicon-briefcase glyph-lg" aria-hidden="true"></span>
+                    </a>
+                </td>
+            *@
             <td>
-                <a href="@Url.Action("AddTeacher", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Lägg till lärare">
-                    <span class="glyphicon glyphicon-briefcase glyph-lg" aria-hidden="true"></span>
-                </a>
+                @Html.ActionLink("LÄRARE", "AddTeacher", "Groups", new { id = item.Id }, new { @class = "btn btn-red"})
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -48,18 +55,16 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                <a href="@Url.Action("Edit", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
-                    <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-                </a>
-                <a href="@Url.Action("Delete", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
-                    <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
-                </a>
                 @*
-                    @Html.ActionLink("Ändra", "GroupEdit", new { id = item.Id }) |
-                    @Html.ActionLink("Lägg till som lärare", "AddTeacher", new { groupId = item.Id }) |
-                    @Html.ActionLink("Kurser", "CourseIndex", new { id = item.Id }) |
-                    @Html.ActionLink("Ta bort", "GroupDelete", new { id = item.Id })
+                    <a href="@Url.Action("Edit", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
+                        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Delete", "Groups", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
+                        <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
+                    </a>
                 *@
+                @Html.ActionLink("ÄNDRA", "Edit", "Groups", new { id = item.Id }, new { @class = "btn btn-red" }) 
+                @Html.ActionLink("TA BORT", "Delete", "Groups", new { id = item.Id }, new { @class = "btn btn-red" })
             </td>
         </tr>
     }
