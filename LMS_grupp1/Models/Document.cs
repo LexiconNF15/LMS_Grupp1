@@ -24,6 +24,7 @@ namespace LMS_grupp1.Models
         [DisplayName("Datum")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TimeStamp { get; set; }
+       
 
         [DataType(DataType.Date)]
         [DisplayName("Slutdatum")]

@@ -12,6 +12,7 @@
 
 <div>
     @Html.ActionLink("TILLBAKA", "Details", "Courses", new { id = Model.CourseId }, new { @class = "btn btn-red" })
+    @Html.ActionLink("LADDA UPP DOKUMENT", "Create", "Documents", null, new { @class = "btn btn-red" })
     @*
         <a href="@Url.Action("Details", "Courses", new { id = Model.CourseId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Detaljer">
             <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>

@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using LMS_grupp1.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
+
 
 namespace LMS_grupp1.Controllers
 {
@@ -49,6 +51,7 @@ namespace LMS_grupp1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,Originator")] Document document)
         {
+
             //Upload a document to document folder
 
             if (ModelState.IsValid)
@@ -59,8 +62,14 @@ namespace LMS_grupp1.Controllers
                     string pathToSave = Server.MapPath("~/Document/");
                     string filename = Path.GetFileName(Request.Files[upload].FileName);
                     Request.Files[upload].SaveAs(Path.Combine(pathToSave, filename));
-                }
 
+                    document.TimeStamp = DateTime.Now;
+                    document.Originator = User.Identity.GetUserId();
+                    
+                    
+                    document.LocationUrl = Server.MapPath("/Document/") + filename + Guid.NewGuid();
+                    ViewBag.filename = filename;
+                }
                 db.Documents.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
