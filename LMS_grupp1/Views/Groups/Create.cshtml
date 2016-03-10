@@ -7,10 +7,10 @@
 <h2>Skapa grupp</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Group</h4>
         <hr />
@@ -41,19 +41,24 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Bekräfta">
-                    <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
-                </button>
+                <input type="submit" value="SPARA" class="btn btn-red" />
+                @*
+                    <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Bekräfta">
+                        <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
+                    </button>
+                *@
             </div>
         </div>
     </div>
 }
 
 <div>
-    @* @Html.ActionLink("Tillbaka", "Index") *@
-    <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
-        <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
-    </a>
+    @Html.ActionLink("TILLBAKA", "Index", "Groups", null, new { @class = "btn btn-red" })
+    @*
+        <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
+            <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
+        </a>
+    *@
 </div>
 
 @section Scripts {
