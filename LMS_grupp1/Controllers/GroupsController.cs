@@ -34,8 +34,8 @@ namespace LMS_grupp1.Controllers
                    Group group = db.Groups.Find(groupId);
                    return View("CourseIndex", group);
                 }
-            }
-            return View();
+            } 
+            return View(db.Groups.ToList());
         }
 
 
