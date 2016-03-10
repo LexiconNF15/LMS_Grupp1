@@ -245,41 +245,6 @@ namespace LMS_grupp1.Migrations
                     EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
                 }
             );
-/*
-            context.DocumentTypes.AddOrUpdate(
-                            d => d.Name,
-                            new DocumentType
-                            {
-                                Id = 1,
-                                Name = "Term-Paper"
-                            },
-                             new DocumentType
-                             {
-                                 Id = 2,
-                                 Name = "General Information for The Group"
-                             },
-                             new DocumentType
-                             {
-                                 Id = 3,
-                                 Name = "Course Document"
-                             },
-                             new DocumentType
-                             {
-                                 Id = 4,
-                                 Name = "Student Tasks"
-                             },
-                             new DocumentType
-                             {
-                                 Id = 5,
-                                 Name = "General Information"
-                             },
-                              new DocumentType
-                              {
-                                  Id = 6,
-                                  Name = "Lecture Notes"
-                              }
-                       );
-*/
 
         }
     }

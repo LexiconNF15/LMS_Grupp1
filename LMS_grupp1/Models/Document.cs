@@ -7,15 +7,6 @@ using System.Web;
 
 namespace LMS_grupp1.Models
 {
-    public enum DocumentType
-    {
-        Public,
-        Group, 
-        Course, 
-        Activity, 
-        Private
-    }
-
     public class Document
     {
         public int Id { get; set; }
@@ -42,7 +33,10 @@ namespace LMS_grupp1.Models
         public string LocationUrl { get; set; }
 
         [DisplayName("Ansvarig")]
-        public string UserId { get; set; }
+        public string Originator { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        
+
     }
 }

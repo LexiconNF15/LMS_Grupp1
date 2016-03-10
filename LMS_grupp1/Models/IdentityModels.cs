@@ -45,5 +45,6 @@ namespace LMS_grupp1.Models
         public DbSet<Group> Groups { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Activity> Activities { get; set; }
+       
     }
 }

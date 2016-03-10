@@ -33,5 +33,7 @@ namespace LMS_grupp1.Models
 
         public virtual ICollection<Activity> Activities { get; set; }
 
+        
+
     }
 }
