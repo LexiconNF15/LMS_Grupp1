@@ -142,16 +142,29 @@ namespace LMS_grupp1.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(int? groupId)
         {
-
+            RegisterViewModel model = new RegisterViewModel();
             // A Group Id list to get a drop down list in a create register page
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
+            if (groupId != null)
+            {
+                model.GroupId = (int)groupId;
+                ViewBag.RoleId = new SelectList(db.Roles, "Name", "Name");
+            }
+            else
+            {
+                ViewBag.RoleId = null;
+                model.GroupId = null;
+                var list = new SelectList(db.Roles, "Name", "Name");
+                model.Role = list
+                    .Where(r => r.Text == "Teacher")
+                    .Select(r => r.Value)
+                    .FirstOrDefault();
+            }
 
             // A Role Id list to get a drop down list in a create register page
-            ViewBag.RoleId = new SelectList(db.Roles, "Name", "Name");
 
-            return View();
+            return View(model);
         }
 
         //
@@ -170,7 +183,6 @@ namespace LMS_grupp1.Controllers
                     GroupId = model.GroupId,
                     Name = model.Name,
                     Personnumber = model.Personnumber,
-                    PhoneNumber = model.PhoneNumber
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -185,7 +197,7 @@ namespace LMS_grupp1.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Groups");
+                    return RedirectToAction("UserIndex", "Groups");
                 }
                 AddErrors(result);
             }
@@ -214,14 +226,21 @@ namespace LMS_grupp1.Controllers
                     return View("Error");
                 }
                 var result = UserManager.Delete(user);
-                return RedirectToAction ("UserIndex", "Groups", new { groupId = model.Id} );
+                return RedirectToAction("UserIndex", "Groups", new { groupId = model.Id });
             }
             return View();
         }
 
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult EditUser(string id)
         {
+            if (User.IsInRole("Student"))
+            {
+                if (User.Identity.GetUserId() != id)
+                {
+                    return RedirectToAction("UserIndex", "Groups");
+                }
+            }
             ApplicationUser user = db.Users.Find(id);
             return View(user);
         }
@@ -241,7 +260,7 @@ namespace LMS_grupp1.Controllers
             return View();
         }
 
-        [Authorize(Roles= "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult MoveUser(string id)
         {
             ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");

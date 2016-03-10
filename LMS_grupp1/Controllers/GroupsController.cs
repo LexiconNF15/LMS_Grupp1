@@ -27,7 +27,7 @@ namespace LMS_grupp1.Controllers
                     .First();
                 if (User.IsInRole("Teacher") && groupId == null)
                 {
-                    return View("GroupIndex", db.Groups.ToList());
+                    return View("GroupIndex", db.Groups.OrderBy(t => t.StartTime).ToList());
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace LMS_grupp1.Controllers
                    return View("CourseIndex", group);
                 }
             }
-            return View();
+            return View(db.Groups.OrderBy(t => t.StartTime).ToList());
         }
 
 

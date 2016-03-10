@@ -44,35 +44,35 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+    @*
+        <div class="form-group">
+            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.GroupId, "- Välj Grupp -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
+    *@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.GroupId, "- Välj Grupp -", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+    if (ViewBag.RoleId != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.RoleId, "- Välj Roll -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.RoleId, "- Välj Roll -", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    }
+    else
+    {
+        @Html.HiddenFor(model => model.Role)
+    }
+    @Html.HiddenFor(model => model.GroupId)
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-own btn-thin">
-                <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
-            </button>
+            <input type="submit" value="Spara" class="btn btn-gray" />
         </div>
     </div>
 }

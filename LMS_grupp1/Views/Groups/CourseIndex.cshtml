@@ -13,37 +13,15 @@
 @if (User.IsInRole("Teacher"))
 {
     <p>
-        @Html.ActionLink("NY KURS", "Create", "Courses", new { groupId = Model.Id }, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("Create", "Courses", new { groupId = Model.Id })" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Skapa ny kurs">
-                <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
-                <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
-            </a>
-        *@
-        @Html.ActionLink("LÄMNA SOM LÄRARE", "RemoveTeacher", "Groups", null, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lämna som lärare">
-                <span class="glyphicon glyphicon-briefcase glyph-comb-lg" aria-hidden="true"></span>
-                <span class="glyphicon glyphicon-share-alt glyph-add-norm" aria-hidden="true"></span>
-            </a>
-        *@
+        @Html.ActionLink("Ny kurs", "Create", "Courses", new { groupId = Model.Id }, new { @class = "btn btn-gray" })
+        @Html.ActionLink("Lämna som lärare", "RemoveTeacher", "Groups", null, new { @class = "btn btn-gray" })
     </p>
 }
 @Html.Action("Index", "Courses", new { groupId = Model.Id })
 <p>
-    @Html.ActionLink("DELTAGARE", "UserIndex", "Groups", null, new { @class = "btn btn-red" })
-    @*
-        <a href="@Url.Action("UserIndex", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till deltagarsida">
-            <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
-        </a>
-    *@
+    @Html.ActionLink("Deltagare", "UserIndex", "Groups", null, new { @class = "btn btn-gray" })
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("ÄNDRA GRUPP", "Edit", "Groups", new { id = Model.Id }, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("Edit", "Groups", new { id = Model.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra gruppuppgift">
-                <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-            </a>
-        *@
+        @Html.ActionLink("Ändra grupp", "Edit", "Groups", new { id = Model.Id }, new { @class = "btn btn-gray" })
     }
 </p>

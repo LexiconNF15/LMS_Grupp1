@@ -245,7 +245,7 @@ namespace LMS_grupp1.Migrations
                     EndTime = DateTime.ParseExact("01/18/2016", "d", provider)
                 }
             );
-
+/*
             context.DocumentTypes.AddOrUpdate(
                             d => d.Name,
                             new DocumentType
@@ -279,7 +279,7 @@ namespace LMS_grupp1.Migrations
                                   Name = "Lecture Notes"
                               }
                        );
-
+*/
 
         }
     }

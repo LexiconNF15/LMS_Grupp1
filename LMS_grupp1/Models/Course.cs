@@ -33,8 +33,5 @@ namespace LMS_grupp1.Models
 
         public virtual ICollection<Activity> Activities { get; set; }
 
-        [DisplayName("Dokument")]
-        public virtual ICollection<Document> Documents { get; set; }
-
     }
 }

@@ -3,26 +3,19 @@
 {
     using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Deltagare", "UserIndex", "Groups", routeValues: null, htmlAttributes: new { title = "Deltagare" })</li>
-        <li>@Html.ActionLink("Kurser", "CourseIndex", "Groups", routeValues: null, htmlAttributes: new { title = "Kurser" })</li>
-        @if (User.IsInRole("Teacher"))
-        {
-            <li>@Html.ActionLink("Grupper", "GroupIndex", "Groups", routeValues: null, htmlAttributes: new { title = "Grupper" })</li>
-            <li>@Html.ActionLink("Registrera", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        }
-        <li>
-            @Html.ActionLink("" + User.Identity.GetUserName(), "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("" + User.Identity.GetUserName(), "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-       <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

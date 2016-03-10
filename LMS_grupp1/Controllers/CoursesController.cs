@@ -15,12 +15,13 @@ namespace LMS_grupp1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
+        [ChildActionOnly]
         public ActionResult Index(int? groupId)
         {
             var courses = db.Courses
                 .Where(c => c.GroupId == groupId)
                 .OrderBy(c => c.StartTime);
-            return View(courses.ToList());
+            return PartialView(courses.ToList());
         }
 
         // GET: Courses/Details/5

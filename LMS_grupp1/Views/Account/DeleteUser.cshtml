@@ -50,8 +50,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till lista", "UserIndex", "Groups", null, null)
+            @Html.ActionLink("Tillbaka", "UserIndex", "Groups", null, new { @class = "btn btn-gray" })
+            <input type="submit" value="Ta bort" class="btn btn-gray" />
         </div>
     }
 </div>

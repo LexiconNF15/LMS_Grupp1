@@ -50,24 +50,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="SPARA" class="btn btn-red" />
-                @*
-                    <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Spara">
-                        <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
-                    </button>
-                *@
+                <input type="submit" value="Skapa" class="btn btn-gray" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("TILLBAKA", "Index", "Groups", null, new { @class = "btn btn-red" })
-    @*
-        <a href="@Url.Action("Index", "Groups", new { id = Model.GroupId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
-            <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
-        </a>
-    *@
+    @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
 </div>
 
 @section Scripts {

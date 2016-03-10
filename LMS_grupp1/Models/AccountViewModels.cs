@@ -80,8 +80,11 @@ namespace LMS_grupp1.Models
         [Compare("Password", ErrorMessage = "Första och andra lösenordet stämmer inte överrens.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Roll")]
         public string Role { get; set; }
-        public int GroupId { get; set; }
+
+        [Display(Name = "Grupp")]
+        public int? GroupId { get; set; }
 
         [Display(Name="Namn")]
         public string Name { get; set; }
