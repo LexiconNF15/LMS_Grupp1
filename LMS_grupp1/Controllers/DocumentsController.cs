@@ -18,8 +18,7 @@ namespace LMS_grupp1.Controllers
         // GET: Documents
         public ActionResult Index()
         {
-            var documents = db.Documents.Include(d => d.Activity).Include(d => d.Course).Include(d => d.DocumentType).Include(d => d.Group);
-            return View(documents.ToList());
+            return View(db.Documents.ToList());
         }
 
         // GET: Documents/Details/5
@@ -40,10 +39,6 @@ namespace LMS_grupp1.Controllers
         // GET: Documents/Create
         public ActionResult Create()
         {
-            ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name");
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name");
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
             return View();
         }
 
@@ -52,7 +47,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,DocumentTypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,Originator")] Document document)
         {
             //Upload a document to document folder
 
@@ -65,16 +60,12 @@ namespace LMS_grupp1.Controllers
                     string filename = Path.GetFileName(Request.Files[upload].FileName);
                     Request.Files[upload].SaveAs(Path.Combine(pathToSave, filename));
                 }
-               
+
                 db.Documents.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
-            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
-            //ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
-            //ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
 
@@ -90,10 +81,6 @@ namespace LMS_grupp1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
 
@@ -102,7 +89,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,DocumentTypeId,Originator,ActivityId,CourseId,GroupId")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,Originator")] Document document)
         {
             if (ModelState.IsValid)
             {
@@ -110,10 +97,6 @@ namespace LMS_grupp1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActivityId = new SelectList(db.Activities, "Id", "Name", document.ActivityId);
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", document.CourseId);
-            ViewBag.DocumentTypeId = new SelectList(db.DocumentTypes, "Id", "Name", document.DocumentTypeId);
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", document.GroupId);
             return View(document);
         }
 

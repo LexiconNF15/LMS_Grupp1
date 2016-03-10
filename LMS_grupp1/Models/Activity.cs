@@ -33,8 +33,7 @@ namespace LMS_grupp1.Models
         public int CourseId { get; set; }
         public virtual Course Course { get; set; }
 
-        [DisplayName("Dokument")]
-        public virtual ICollection<Document> Documents { get; set; }
+        
 
 
     }
