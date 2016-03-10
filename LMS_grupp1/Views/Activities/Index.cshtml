@@ -21,15 +21,39 @@
         <th></th>
     </tr>
 
+    @{
+        DateTime now = DateTime.Now.Date;
+    }
+
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                <a href="@Url.Action("Details", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Detaljer">
-                    <span class="glyphicon glyphicon-arrow-down glyph-lg" aria-hidden="true"></span>
-                </a>
-            </td>
-
+            @if (now <= item.EndTime)
+            {
+                <td>
+                    @Html.ActionLink("MATERIAL", "Details", "Activities", new { id = item.Id }, new { @class = "btn btn-red" })
+                </td>
+                @*
+                    <td>
+                        <a href="@Url.Action("Details", "Activities" , new { id=item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Till aktivitet">
+                            <span class="glyphicon glyphicon-arrow-down glyph-lg" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                *@
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("MATERIAL", "Details", "Activities", new { id = item.Id }, new { @class = "btn btn-red" })
+                </td>
+                @*
+                    <td>
+                        <a href="@Url.Action("Details", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Till aktivitet (utdaterad)">
+                            <span class="glyphicon glyphicon-asterisk glyph-lg" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                *@
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -45,16 +69,17 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    <a href="@Url.Action("Edit", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
-                        <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-                    </a>
-                    <a href="@Url.Action("Delete", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
-                        <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
-                    </a>
                     @*
-                        @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                        <a href="@Url.Action("Edit", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
+                            <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
+                        </a>
+                        <a href="@Url.Action("Delete", "Activities", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort">
+                            <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
+                        </a>
                     *@
+
+                    @Html.ActionLink("ÄNDRA", "Edit", "Activities", new { id = item.Id }, new { @class = "btn btn-red" })
+                    @Html.ActionLink("TA BORT", "Delete", "Activities", new { id = item.Id }, new { @class = "btn btn-red" })
                 </td>
             }
         </tr>

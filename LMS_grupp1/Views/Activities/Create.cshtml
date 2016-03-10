@@ -7,15 +7,15 @@
 <h2>Skapa aktivitet</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Activitet</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-     
+
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -47,24 +47,29 @@
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
             </div>
         </div>
-   
-        @Html.HiddenFor(model => model.CourseId)  
+
+        @Html.HiddenFor(model => model.CourseId)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Skapa aktivitet">
-                    <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
-                </button>
+                <input type="submit" value="SPARA" class="btn btn-red" />
+                @*
+                    <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Skapa aktivitet">
+                        <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
+                    </button>
+                *@
             </div>
         </div>
     </div>
 }
 
 <div>
-    @* @Html.ActionLink("Tillbaka till aktivitetslista", "Details", "Courses", new { id = Model.CourseId}, null) *@
-    <a href="@Url.Action("Details", "Courses", new { id = Model.CourseId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Detaljerat">
-        <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
-    </a>
+    @Html.ActionLink("TILLBAKA", "Details", "Courses", new { id = Model.CourseId }, new { @class = "btn btn-red" })
+    @*
+        <a href="@Url.Action("Details", "Courses", new { id = Model.CourseId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Detaljerat">
+            <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
+        </a>
+    *@
 </div>
 
 @section Scripts {

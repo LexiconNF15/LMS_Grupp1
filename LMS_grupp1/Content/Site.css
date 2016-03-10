@@ -42,6 +42,32 @@ textarea {
     color: white;
 }
 
+
+.btn-red,
+.btn-red:active,
+.btn-red:hover {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 2px 5px 1px 5px;
+    background-color: #D60000;
+    color: white;
+    font-size: 10px;
+    border-radius: 0;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color:#82f774;
+    font-weight:normal;
+    font-size: 12px;
+}
+
+.nav.navbar-nav.navbar-right li a:active, 
+.nav.navbar-nav.navbar-right li a:hover {
+    color: white;
+    font-weight: normal;
+    font-size: 12px;
+}
+
 .btn-thin {
     padding: 2px 12px 2px 12px;
 }
