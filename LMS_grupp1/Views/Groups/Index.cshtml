@@ -11,6 +11,9 @@
     <tr>
 
         <th>
+            Status
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -21,10 +24,40 @@
         </th>
         <th></th>
     </tr>
+    @{
+        DateTime now = DateTime.Now.Date;
+    }
 
     @foreach (var item in Model)
     {
         <tr>
+            @if (now > item.EndTime)
+            {
+                <td>
+                    <a class="btn btn-red" data-toggle="tooltip" title="Kursen är avslutad">
+                        Avslutad
+                    </a>
+                </td>
+
+            }
+            else if (now < item.StartTime)
+            {
+                <td>
+                    <a class="btn btn-green" data-toggle="tooltip" title="Kursen är inte startad">
+                        Kommande
+                    </a>
+                </td>
+
+            }
+            else
+            {
+                <td>
+                    <a class="btn btn-yellow" data-toggle="tooltip" title="Kursen pågår">
+                        Pågående  
+                    </a>
+                </td>
+
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
