@@ -88,16 +88,6 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @*
-                        <a href="@Url.Action("Edit", "Courses", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra">
-                            <span class=" glyphicon glyphicon-pencil glyph-lg" aria-hidden="true">
-                        </span>
-                        </a>
-                        <a href="@Url.Action("Delete", "Courses", new { id = item.Id })" class="btn btn-own btn-thin" , data-toggle="tooltip" title="Ta bort">
-                            <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
-                        </a>
-                    *@
-
                     @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
                     @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>

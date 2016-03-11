@@ -9,7 +9,7 @@
 <div>
     <h4>Material</h4> <hr />
 </div>
-
+@Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.ActivityLevel, id = Model.Id })
 <div>
     @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId }, new { @class = "btn btn-gray" })
 </div>

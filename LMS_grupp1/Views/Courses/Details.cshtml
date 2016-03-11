@@ -17,6 +17,7 @@
 
 }
 @Html.Action("Index", "Activities", new { courseId = Model.Id })
+@Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.CourseLevel, id = Model.Id })
 
 <div>
     @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
