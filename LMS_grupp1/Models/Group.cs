@@ -28,6 +28,5 @@ namespace LMS_grupp1.Models
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Document> Documents { get; set; }
     }
 }

@@ -20,16 +20,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            @*
-                <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till grupp">
-                    <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
-                </a>
-                <button type="submit" class="btn btn-own btn-thin" data-toggle="tooltip" title="Bekräfta">
-                    <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
-                </button>
-            *@
-            @Html.ActionLink("TILLBAKA", "Index", "Groups", null, new { @class = "btn btn-red" })
-            <input type="submit" value="TA BORT" class="btn btn-red" />
+            @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
+            <input type="submit" value="Ta bort" class="btn btn-gray" />
 
         </div>
     }

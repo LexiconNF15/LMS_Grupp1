@@ -38,14 +38,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-own btn-thin">
-                            <span class="glyphicon glyphicon-ok glyph-lg" aria-hidden="true"></span>
-                        </button>
+                        <input type="submit" value="Spara" class="btn btn-gray" />
                     </div>
                 </div>
                 @* Enable this once you have account confirmation enabled for password reset functionality*@
                     <p>
-                        @Html.ActionLink("Glömt lösenordet?", "ForgotPassword")
+                        @Html.ActionLink("Glömt lösenordet?", "ForgotPassword", "Account", null, new { @class = "btn btn-gray" })
                     </p>
             }
         </section>

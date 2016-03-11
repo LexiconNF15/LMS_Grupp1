@@ -16,11 +16,24 @@ namespace LMS_grupp1.Controllers
     public class DocumentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private const string path = "~\\Documents\\"; 
 
         // GET: Documents
-        public ActionResult Index()
+        public ActionResult Index(DocumentLevel level, int id)
         {
-            return View(db.Documents.ToList());
+            return PartialView(db.Documents
+                .Where(d => d.Level == level && d.LevelId == id)
+                .OrderBy(n => n.Name)
+                .ToList()
+                );
+        }
+
+        public ActionResult Download(DocumentLevel level, int id)
+        {
+            Document document = db.Documents.Find(id);
+            string path = Server.MapPath(Path.Combine(document.LocationUrl, document.GuidName));
+            byte[] content = System.IO.File.ReadAllBytes(path);
+            return File(content, System.Net.Mime.MediaTypeNames.Application.Octet, document.Name);
         }
 
         // GET: Documents/Details/5

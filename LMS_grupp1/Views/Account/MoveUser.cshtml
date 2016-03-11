@@ -38,19 +38,14 @@
 
        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-own btn-thin">
-                    <span class="glyphicon glyphicon-save glyph-lg" aria-hidden="true"></span>
-                </button>
+                <input type="submit" value="Flytta" class="btn btn-gray" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @* @Html.ActionLink("Tillbaka till användarlista", "UserIndex", "Groups", null, null) *@
-    <a href="@Url.Action("UserIndex", "Groups")" class="btn btn-own btn-thin">
-        <span class="glyphicon glyphicon-arrow-left glyph-lg" aria-hidden="true"></span>
-    </a>
+    @Html.ActionLink("Tillbaka", "UserIndex", "Groups", null, new { @class = "btn btn-gray" })
 </div>
 
 @section Scripts {

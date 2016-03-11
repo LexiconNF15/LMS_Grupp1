@@ -8,20 +8,8 @@
 @if (User.IsInRole("Teacher"))
 {
     <p>
-        @Html.ActionLink("NY DELTAGARE", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("Register", "Account", new { id = "registerLink" })" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="´Lägg till deltagare">
-                <span class="glyphicon glyphicon-user glyph-comb-lg" aria-hidden="true"></span>
-                <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
-            </a>
-        *@
-        @Html.ActionLink("LÄMNA SOM LÄRARE", "RemoveTeacher", "Groups", null, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("RemoveTeacher", "Groups")" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lämna som lärare">
-                <span class="glyphicon glyphicon-briefcase glyph-comb-lg" aria-hidden="true"></span>
-                <span class="glyphicon glyphicon-share-alt glyph-add-norm" aria-hidden="true"></span>
-            </a>
-        *@
+        @Html.ActionLink("Ny deltagare", "Register", "Account", new { groupId = Model.Id }, htmlAttributes: new { id = "registerLink", @class = "btn btn-gray" })
+        @Html.ActionLink("Lämna som lärare", "RemoveTeacher", "Groups", null, new { @class = "btn btn-gray" })
     </p>
 }
 <div>
@@ -30,7 +18,9 @@
 </div>
 <table class="table">
     <tr>
-
+        <th>
+            @Html.DisplayName("Deltagare")
+        </th>
         <th>
             @Html.DisplayName("E-post")
         </th>
@@ -44,6 +34,30 @@
     @foreach (var item in Model.Users)
     {
         <tr>
+            @if (false)
+            {
+                <td>
+                    <button type="button" class="btn btn-green" data-toggle="tooltip" title="Lärare">
+                        <span class="glyphicon glyphicon-user glyph-lg" aria-hidden="true"></span>
+                    </button>
+                </td>
+            }
+            else if (item.Email == User.Identity.Name)
+            {
+                <td>
+                    <a href="@Url.Action("EditUser", "Account", new { id = item.Id })" class="btn btn-yellow" data-toggle="tooltip" title="Egen ikon">
+                        <span class="glyphicon glyphicon-user glyph-lg" aria-hidden="true"></span>
+                    </a>
+                </td>
+           }
+            else
+            {
+                <td>
+                    <button type="button" class="btn btn-red" data-toggle="tooltip" title="Annan deltagare">
+                        <span class="glyphicon glyphicon-user glyph-lg" aria-hidden="true"></span>
+                    </button>
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
@@ -57,25 +71,11 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("ÄNDRA", "EditUser", "Account", new { id = item.Id }, new { @class = "btn btn-red" })
-                    @*
-                        <a href="@Url.Action("EditUser", "Account", new { id = item.Id})" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra deltagaruppgift">
-                            <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-                        </a>
-                    *@
+                    @Html.ActionLink("Ändra", "EditUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" })
                     @if (item.Email != User.Identity.Name)
                     {
-                        @Html.ActionLink("TA BORT", "DeleteUser", "Account", new { id = item.Id }, new { @class = "btn btn-red" }) @:
-                        @Html.ActionLink("FLYTTA GRUPP", "MoveUser", "Account", new { id = item.Id }, new { @class = "btn btn-red" })
-                        @*
-                            <a href="@Url.Action("DeleteUser", "Account", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ta bort deltagare">
-                                <span class="glyphicon glyphicon-remove glyph-lg" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="@Url.Action("MoveUser", "Account", new { id = item.Id })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Flytta till annan grupp">
-                                <span class="glyphicon glyphicon-share-alt glyph-lg" aria-hidden="true"></span>
-                            </a>
-                        *@
+                        @Html.ActionLink("Ta bort", "DeleteUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" }) @:
+                        @Html.ActionLink("Flytta grupp", "MoveUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" })
                     }
                 </td>
             }
@@ -83,20 +83,11 @@
         </tr>
     }
 </table>
+@Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.GroupLevel, id = Model.Id })
 <p>
-    @Html.ActionLink("KURSER", "Index", "Groups", null, new { @class = "btn btn-red" })
-    @*
-        <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till kurssida">
-            <span class="glyphicon glyphicon-arrow-left  glyph-lg" aria-hidden="true"></span>
-        </a>
-    *@
+    @Html.ActionLink("Kurser", "Index", "Groups", null, new { @class = "btn btn-gray" })
     @if (User.IsInRole("Teacher"))
     {
-        @Html.ActionLink("ÄNDRA GRUPP", "Edit", "Groups", new { id = Model.Id }, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("Index", "Groups")" class="btn btn-own btn-thin" data-toggle="tooltip" title="Ändra gruppuppgift">
-                <span class="glyphicon glyphicon-pencil glyph-lg" aria-hidden="true"></span>
-            </a>
-        *@
+        @Html.ActionLink("Ändra grupp", "Edit", "Groups", new { id = Model.Id }, new { @class = "btn btn-gray" })
     }
 </p>

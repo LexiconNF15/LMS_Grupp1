@@ -15,13 +15,14 @@ namespace LMS_grupp1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Activities
-        public ViewResult Index(int? courseId)
+        [ChildActionOnly]
+        public ActionResult Index(int? courseId)
         {
             //// Code below to return only the activities that related to choosen course id
-            var Activities = db.Activities
+            var activities = db.Activities
                 .Where(c => c.CourseId == courseId)
                 .OrderBy(c => c.StartTime);
-            return View(Activities.ToList());
+            return PartialView(activities.ToList());
         }
 
         // GET: Activities/Create

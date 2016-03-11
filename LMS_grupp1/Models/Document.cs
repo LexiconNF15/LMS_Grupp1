@@ -7,12 +7,21 @@ using System.Web;
 
 namespace LMS_grupp1.Models
 {
+    public enum DocumentLevel
+    {
+        GroupLevel,
+        CourseLevel,
+        ActivityLevel,
+        PrivateLevel
+    }
+
     public class Document
     {
         public int Id { get; set; }
 
         [DisplayName("Dokument namn")]
         public string Name { get; set; }
+        public string GuidName { get; set; }
 
         [DisplayName("Beskrivnining")]
         public string Description { get; set; }
@@ -37,7 +46,8 @@ namespace LMS_grupp1.Models
         public string Originator { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        
+        public int LevelId { get; set; }
+        public DocumentLevel Level { get; set; }
 
     }
 }

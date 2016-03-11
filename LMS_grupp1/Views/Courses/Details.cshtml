@@ -12,25 +12,15 @@
 @if (User.IsInRole("Teacher"))
 {
     <p>
-        @Html.ActionLink("NY AKTIVITET", "Create", "Activities", new { courseId = Model.Id }, new { @class = "btn btn-red" })
-        @*
-            <a href="@Url.Action("Create", "Activities", new { courseId = Model.Id })" class="btn btn-own btn-comb-thin" data-toggle="tooltip" title="Lägg till aktivitet">
-                <span class="glyphicon glyphicon-list-alt glyph-comb-lg" aria-hidden="true"></span>
-                <span class="glyphicon glyphicon-plus glyph-add-norm" aria-hidden="true"></span>
-            </a>
-        *@
+        @Html.ActionLink("Ny aktivitet", "Create", "Activities", new { courseId = Model.Id }, new { @class = "btn btn-gray" })
     </p>
 
 }
 @Html.Action("Index", "Activities", new { courseId = Model.Id })
+@Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.CourseLevel, id = Model.Id })
 
 <div>
-    @Html.ActionLink("TILLBAKA", "Index", "Groups", null, new { @class = "btn btn-red" })
-    @*
-        <a href="@Url.Action("Index", "Groups", new { id = Model.GroupId })" class="btn btn-own btn-thin" data-toggle="tooltip" title="Tillbaka till kurslista">
-            <span class="glyphicon glyphicon-arrow-up glyph-lg" aria-hidden="true"></span>
-        </a>
-    *@
+    @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
 </div>
 
 @section Scripts {
