@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LMS_grupp1.Models.Document>
+﻿@model IEnumerable<LMS_grupp1.Models.DocumentView>
 
 @{
     ViewBag.Title = "";
@@ -6,9 +6,6 @@
 
 <h4>Dokument</h4>
 
-<p>
-    @Html.ActionLink("Ladda upp", "Create", "Documents", new { groupId = Model.Id }, new { @class = "btn btn-gray" })
-</p>
 <table class="table">
     <tr>
         <th>
@@ -26,15 +23,14 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
-            {
-                <td>
-                    <a href="@Url.Action("Details", "Documents" , new { id=item.Id })" class="btn btn-red" data-toggle="tooltip" title="Till aktivitet (utdaterad)">
-                        <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
-                    </a>
-                </td>
-            }
+            <td>
+                <a href="@Url.Action("Download", "Documents" , new { id=item.Id })" class="btn btn-blue" data-toggle="tooltip" title="Ladda ner dokument">
+                    <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
+                </a>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -44,16 +40,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Originator)
             </td>
-            <td>
-                @if (User.IsInRole("Teacher"))
-                {
+            @if (User.IsInRole("Teacher"))
+            {
                 <td>
                     @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
-                }
-            </td>
+            }
         </tr>
-}
+    }
 
 </table>

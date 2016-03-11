@@ -17,6 +17,12 @@
 
 }
 @Html.Action("Index", "Activities", new { courseId = Model.Id })
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Ladda upp", "Create", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.CourseLevel ,id = Model.Id }, new { @class = "btn btn-gray" })
+    </p>
+}
 @Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.CourseLevel, id = Model.Id })
 
 <div>

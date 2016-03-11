@@ -8,28 +8,36 @@ using System.Web;
 using System.Web.Mvc;
 using LMS_grupp1.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace LMS_grupp1.Controllers
 {
     public class DocumentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private const string path = "~\\Documents\\"; 
+        private const string locationUrl = "~/Documents/";
 
         // GET: Documents
         public ActionResult Index(DocumentLevel level, int id)
         {
-            return PartialView(db.Documents
+            var model = db.Documents
                 .Where(d => d.Level == level && d.LevelId == id)
                 .OrderBy(n => n.Name)
-                .ToList()
-                );
+                .Select(m => new DocumentView
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    TimeStamp = m.TimeStamp,
+                    Deadline = m.Deadline,
+                    Originator = db.Users.Where(u => u.Id == m.Originator).FirstOrDefault().Email
+                });
+            return PartialView(model);
         }
 
-        public ActionResult Download(DocumentLevel level, int id)
+        public FileResult Download(int id)
         {
             Document document = db.Documents.Find(id);
-            string path = Server.MapPath(Path.Combine(document.LocationUrl, document.GuidName));
+            string path = Server.MapPath(Path.Combine(locationUrl, document.GuidName + document.Extension));
             byte[] content = System.IO.File.ReadAllBytes(path);
             return File(content, System.Net.Mime.MediaTypeNames.Application.Octet, document.Name);
         }
@@ -50,9 +58,12 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Documents/Create
-        public ActionResult Create()
+        public ActionResult Create(DocumentLevel level, int id)
         {
-            return View();
+            Document document = new Document();
+            document.Level = level;
+            document.LevelId = id;
+            return View(document);
         }
 
         // POST: Documents/Create
@@ -60,23 +71,44 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,Originator")] Document document)
+        public ActionResult Create([Bind(Include = "Id,Name,GuidName,Description,Feedback,TimeStamp,Deadline,Originator,Level,LevelId")] Document document)
         {
             //Upload a document to document folder
+            document.TimeStamp = DateTime.Now;
+            document.Originator = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {
-                foreach (string upload in Request.Files)
+                if (Request.Files.Count > 0)
                 {
-                    if (Request.Files[upload].ContentLength == 0) continue;
-                    string pathToSave = Server.MapPath("~/Document/");
-                    string filename = Path.GetFileName(Request.Files[upload].FileName);
-                    Request.Files[upload].SaveAs(Path.Combine(pathToSave, filename));
-                }
+                    var file = Request.Files[0];
+                    if (file.ContentLength > 0)
+                    {
+                        document.GuidName = Guid.NewGuid();
+                        document.Name = Path.GetFileName(file.FileName);
+                        document.Extension = Path.GetExtension(file.FileName);
 
-                db.Documents.Add(document);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                        db.Documents.Add(document);
+                        db.SaveChanges();
+
+                        string path = Server.MapPath(locationUrl);
+                        file.SaveAs(Path.Combine(path, document.GuidName + document.Extension));
+
+
+                        if (document.Level == DocumentLevel.GroupLevel)
+                        {
+                            return RedirectToAction("Index", "Groups", new { id = document.LevelId });
+                        }
+                        if (document.Level == DocumentLevel.CourseLevel)
+                        {
+                            return RedirectToAction("Details", "Courses", new { id = document.LevelId });
+                        }
+                        if (document.Level == DocumentLevel.ActivityLevel)
+                        {
+                            return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+                        }
+                    }
+                }
             }
 
             return View(document);
@@ -102,13 +134,25 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Feedback,TimeStamp,Deadline,LocationUrl,Originator")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Name,GuidName,Description,Feedback,TimeStamp,Deadline,Originator,Level,LevelId")] Document document)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            if (document.Level == DocumentLevel.GroupLevel)
+            {
+                return RedirectToAction("Index", "Groups", new { id = document.LevelId });
+            }
+            if (document.Level == DocumentLevel.CourseLevel)
+            {
+                return RedirectToAction("Details", "Courses", new { id = document.LevelId });
+            }
+            if (document.Level == DocumentLevel.ActivityLevel)
+            {
+                return RedirectToAction("Details", "Activities", new { id = document.LevelId });
             }
             return View(document);
         }
@@ -136,7 +180,24 @@ namespace LMS_grupp1.Controllers
             Document document = db.Documents.Find(id);
             db.Documents.Remove(document);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            string path = Server.MapPath(Path.Combine(locationUrl, document.GuidName + document.Extension));
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            if (document.Level == DocumentLevel.GroupLevel)
+            {
+                return RedirectToAction("Index", "Groups", new { id = document.LevelId });
+            }
+            if (document.Level == DocumentLevel.CourseLevel)
+            {
+                return RedirectToAction("Details", "Courses", new { id = document.LevelId });
+            }
+            if (document.Level == DocumentLevel.ActivityLevel)
+            {
+                return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+            }
+            return View(document);
         }
 
         protected override void Dispose(bool disposing)

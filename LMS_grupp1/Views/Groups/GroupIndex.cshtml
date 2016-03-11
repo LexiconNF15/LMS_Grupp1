@@ -36,7 +36,7 @@
             @if (now > item.EndTime)
             {
                 <td>
-                    <a href="@Url.Action("AddTeacher", "Courses" , new { id=item.Id })" class="btn btn-red" data-toggle="tooltip" title="Lägg till mig som lärare (utdaterad)">
+                    <a href="@Url.Action("AddTeacher", "Groups" , new { id=item.Id })" class="btn btn-red" data-toggle="tooltip" title="Lägg till mig som lärare (utdaterad)">
                         <span class="glyphicon glyphicon-chevron-down glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>

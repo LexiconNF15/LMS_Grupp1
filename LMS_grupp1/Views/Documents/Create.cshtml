@@ -1,49 +1,26 @@
 ﻿@model LMS_grupp1.Models.Document
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Ladda upp dokument";
 }
 
-<h2>Create</h2>
+<h2>Ladda upp dokument</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Document</h4>
+        <h4>Dokumentuppgifter</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        @Html.HiddenFor(model => model.LevelId)
+        @Html.HiddenFor(model => model.Level)
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Feedback, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Feedback, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimeStamp, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimeStamp, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TimeStamp, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -55,47 +32,34 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.LocationUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LocationUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LocationUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Originator, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Originator, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Originator, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @using (Html.BeginForm("UploadFile",
-                        "Documents",
-                        FormMethod.Post,
-                        new { enctype = "multipart/form-data" }))
-                {
-                    <label for="file">Upload File:</label>
-                    <input type="file" name="file" id="file" />
-                    <br>
-                    @ViewBag.Message
-                }
+                    <label for="file">Dokument:</label>
+                    <input type="file" name="file" id="file" class="btn btn-gray"/>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-gray" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.GroupLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
+    }
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.CourseLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.LevelId}, new { @class = "btn btn-gray" })
+    }
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.ActivityLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Activities", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
+    }
 </div>
 
 @section Scripts {

@@ -1,7 +1,7 @@
 ﻿@model LMS_grupp1.Models.Document
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "";
 }
 
 <h2>Edit</h2>
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,14 +42,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TimeStamp, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimeStamp, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TimeStamp, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Deadline, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control" } })
@@ -58,31 +50,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LocationUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LocationUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LocationUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Originator, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Originator, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Originator, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-gray" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.GroupLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Groups", null, new { @class = "btn btn-gray" })
+    }
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.CourseLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
+    }
+    @if (Model.Level == LMS_grupp1.Models.DocumentLevel.ActivityLevel)
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Activities", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
+    }
 </div>
 
 @section Scripts {

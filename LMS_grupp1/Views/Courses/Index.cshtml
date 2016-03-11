@@ -40,11 +40,6 @@
                         <span class="glyphicon glyphicon-chevron-down glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>
-                @*
-                    <td>
-                        @Html.ActionLink("AKTIVITET", "Details", "Courses", new { id = item.Id }, new { @class = "btn btn-red" })
-                    </td>
-                *@
             }
             else if (now < item.StartTime)
             {
@@ -53,11 +48,6 @@
                         <span class="glyphicon glyphicon-chevron-down glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>
-                @*
-                    <td>
-                        @Html.ActionLink("AKTIVITET", "Details", "Courses", new { id = item.Id }, new { @class = "btn btn-green" })
-                    </td>
-                *@
             }
             else
             {
@@ -66,11 +56,6 @@
                         <span class="glyphicon glyphicon-chevron-down glyph-lg" aria-hidden="true"></span>
                     </a>
                 </td>
-                @*
-                    <td>
-                        @Html.ActionLink("AKTIVITET", "Details", "Courses", new { id = item.Id }, new { @class = "btn btn-yellow" })
-                    </td>
-                *@
             }
 
             <td>
