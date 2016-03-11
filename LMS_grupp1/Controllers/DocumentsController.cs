@@ -71,7 +71,7 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,GuidName,Description,Feedback,TimeStamp,Deadline,Originator,Level,LevelId")] Document document)
+        public ActionResult Create([Bind(Include = "Id,Name,GuidName,Extension,Description,Feedback,TimeStamp,Deadline,Originator,Level,LevelId")] Document document)
         {
             //Upload a document to document folder
             document.TimeStamp = DateTime.Now;
@@ -93,7 +93,6 @@ namespace LMS_grupp1.Controllers
 
                         string path = Server.MapPath(locationUrl);
                         file.SaveAs(Path.Combine(path, document.GuidName + document.Extension));
-
 
                         if (document.Level == DocumentLevel.GroupLevel)
                         {
@@ -140,19 +139,19 @@ namespace LMS_grupp1.Controllers
             {
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            if (document.Level == DocumentLevel.GroupLevel)
-            {
-                return RedirectToAction("Index", "Groups", new { id = document.LevelId });
-            }
-            if (document.Level == DocumentLevel.CourseLevel)
-            {
-                return RedirectToAction("Details", "Courses", new { id = document.LevelId });
-            }
-            if (document.Level == DocumentLevel.ActivityLevel)
-            {
-                return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+
+                if (document.Level == DocumentLevel.GroupLevel)
+                {
+                    return RedirectToAction("Index", "Groups", new { id = document.LevelId });
+                }
+                if (document.Level == DocumentLevel.CourseLevel)
+                {
+                    return RedirectToAction("Details", "Courses", new { id = document.LevelId });
+                }
+                if (document.Level == DocumentLevel.ActivityLevel)
+                {
+                    return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+                }
             }
             return View(document);
         }
