@@ -42,7 +42,8 @@
             {
                 @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
             }
-            @if (Model.Level == LMS_grupp1.Models.DocumentLevel.ActivityLevel)
+            @if (Model.Level == LMS_grupp1.Models.DocumentLevel.ActivityLevel ||
+                 Model.Level == LMS_grupp1.Models.DocumentLevel.PrivateLevel)
             {
                 @Html.ActionLink("Tillbaka", "Details", "Activities", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
             }

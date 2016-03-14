@@ -42,7 +42,7 @@ namespace LMS_grupp1.Models
         public DateTime? Deadline { get; set; }
 
         [DisplayName("Ansvarig")]
-        public string Originator { get; set; }
+        public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
         public int LevelId { get; set; }
