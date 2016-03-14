@@ -29,14 +29,33 @@ namespace LMS_grupp1.Controllers
                 {
                     Id = m.Id,
                     Name = m.Name,
+                    Description = m.Description,
                     TimeStamp = m.TimeStamp,
                     Deadline = m.Deadline,
                     Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email
                 });
-            if (level == DocumentLevel.PrivateLevel && User.IsInRole("Student"))
-            {
-                model = model.Where(u => u.Originator == User.Identity.GetUserName());
-            }
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        [Authorize(Roles = "Teacher, Student")]
+        public ActionResult UploadIndex(int id)
+        {
+            var model = db.Documents
+                .Where(d => d.Level == DocumentLevel.PrivateLevel &&
+                    d.LevelId == id && 
+                    d.UserId == User.Identity.GetUserId())
+                .OrderBy(n => n.Name)
+                .Select(m => new UploadView
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Description = m.Description,
+                    Feedback = m.Feedback,
+                    TimeStamp = m.TimeStamp,
+                    Deadline = m.Deadline,
+                    Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email
+                });
             return PartialView(model);
         }
 

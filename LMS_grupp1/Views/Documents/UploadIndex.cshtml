@@ -1,10 +1,10 @@
-﻿@model IEnumerable<LMS_grupp1.Models.DocumentView>
+﻿@model IEnumerable<LMS_grupp1.Models.UploadView>
 
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "Inlämnade Dokument";
 }
 
-<h4>Dokument</h4>
+<h4>Inlämnade uppgifter</h4>
 
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TimeStamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Originator)
@@ -37,13 +40,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TimeStamp)
             </td>
+            <td data_toggle="tooltip" title="@item.Feedback">
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Originator)
             </td>
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @Html.ActionLink("Lämna synpunkter", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                </td>
+            }
+            else if (User.Identity.Name == item.Originator)
+            {
+                <td>
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }

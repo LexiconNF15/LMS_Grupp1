@@ -7,7 +7,7 @@
     <h2>Aktivitet: @Model.Name</h2>
 </div>
 <div>
-    <h4>Material</h4> <hr />
+    <h4>Material:</h4> <hr />
 </div>
 @if (User.IsInRole("Teacher"))
 {
@@ -16,6 +16,9 @@
     </p>
 }
 @Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.ActivityLevel, id = Model.Id })
+<h4>Uppladdade filer:</h4> <hr />
+@Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.PrivateLevel, id = Model.Id })
+
 <div>
     @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId }, new { @class = "btn btn-gray" })
 </div>
