@@ -70,12 +70,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
-            @if (User.IsInRole("Teacher"))
-            {
-                <td>
+                @if (User.IsInRole("Teacher"))
+                {
+             <td>
                     @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
                     @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
-                </td>
+             </td>
             }
         </tr>
     }

@@ -40,6 +40,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Originator)
             </td>
+           
             @if (User.IsInRole("Teacher"))
             {
                 <td>
@@ -47,6 +48,7 @@
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }
+           
         </tr>
     }
 
