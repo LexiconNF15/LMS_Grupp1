@@ -28,6 +28,8 @@
     </tr>
     @{
         DateTime now = DateTime.Now.Date;
+        TimeSpan day = new TimeSpan(23, 59, 59);
+        now = now + day;
     }
 
     @foreach (var item in Model)

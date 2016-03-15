@@ -7,16 +7,23 @@
     <h2>Aktivitet: @Model.Name</h2>
 </div>
 <div>
-    <h4>Material:</h4> <hr />
+    <h4>Period:  @Html.DisplayFor(model => model.StartTime) -  @Html.DisplayFor(model => model.EndTime)</h4> <hr />
 </div>
-@if (User.IsInRole("Teacher"))
-{
-    <p>
+<div>
+    @Html.DisplayFor(model => model.Description)
+    <hr />
+</div>
+<div>
+    <h4>Dokument: </h4>
+    @if (User.IsInRole("Teacher"))
+    {
         @Html.ActionLink("Ladda upp", "Create", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.ActivityLevel, id = Model.Id }, new { @class = "btn btn-gray" })
-    </p>
-}
+    }
+</div>
 @Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.ActivityLevel, id = Model.Id })
-
+<div>
+    <h4>Inlämnade svar: </h4>
+</div>
 @Html.Action("Index", "Documents", new { level = LMS_grupp1.Models.DocumentLevel.PrivateLevel, id = Model.Id })
 
 <div>

@@ -34,9 +34,8 @@ namespace LMS_grupp1.Models
 
         [DataType(DataType.Date)]
         [DisplayName("Datum")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
         public DateTime TimeStamp { get; set; }
-
 
         [DataType(DataType.Date)]
         [DisplayName("Slutdatum")]
@@ -49,6 +48,8 @@ namespace LMS_grupp1.Models
 
         public int LevelId { get; set; }
         public DocumentLevel Level { get; set; }
+
+        [DisplayName("Inlämningsuppgift")]
         public bool Assignment { get; set; }
 
     }
@@ -73,7 +74,7 @@ namespace LMS_grupp1.Models
 
         [DisplayName("Ansvarig")]
         public string Originator { get; set; }
-        public int Level { get; set; }
+        public DocumentLevel Level { get; set; }
         public bool Assignment { get; set; }
     }
 }

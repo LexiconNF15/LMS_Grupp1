@@ -35,7 +35,8 @@ namespace LMS_grupp1.Controllers
                      TimeStamp = m.TimeStamp,
                      Deadline = m.Deadline,
                      Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email,
-                     Assignment = m.Assignment
+                     Assignment = m.Assignment,
+                     Level = m.Level
                  });
             if (level == DocumentLevel.PrivateLevel && User.IsInRole("Student"))
             {
@@ -97,19 +98,7 @@ namespace LMS_grupp1.Controllers
                         string path = Server.MapPath(locationUrl);
                         file.SaveAs(Path.Combine(path, document.GuidName + document.Extension));
 
-                        if (document.Level == DocumentLevel.GroupLevel)
-                        {
-                            return RedirectToAction("Index", "Groups", new { id = document.LevelId });
-                        }
-                        if (document.Level == DocumentLevel.CourseLevel)
-                        {
-                            return RedirectToAction("Details", "Courses", new { id = document.LevelId });
-                        }
-                        if (document.Level == DocumentLevel.ActivityLevel ||
-                            document.Level == DocumentLevel.PrivateLevel)
-                        {
-                            return RedirectToAction("Details", "Activities", new { id = document.LevelId });
-                        }
+                        return RedirectToLevel(document);                      
                     }
                 }
             }
@@ -118,13 +107,15 @@ namespace LMS_grupp1.Controllers
         }
 
         // GET: Documents/Create
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult AssignmentCreate(int id)
+        [Authorize(Roles = "Student")]
+        public ActionResult Assignment(int id)
         {
             Document document = db.Documents.Find(id);
             Document model = new Document();
             model.Level = DocumentLevel.PrivateLevel;
             model.LevelId = document.LevelId;
+            model.Name = document.Name;
+            model.Deadline = document.Deadline;
             return View(model);
         }
 
@@ -133,8 +124,8 @@ namespace LMS_grupp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult AssignmentCreate([Bind(Include = "Id,LevelId,Deadline")] Document document)
+        [Authorize(Roles = "Student")]
+        public ActionResult Assignment([Bind(Include = "Id,LevelId,Deadline")] Document document)
         {
             //Upload a document to document folder
             document.TimeStamp = DateTime.Now;
@@ -160,7 +151,15 @@ namespace LMS_grupp1.Controllers
                         string path = Server.MapPath(locationUrl);
                         file.SaveAs(Path.Combine(path, document.GuidName + document.Extension));
 
-                        return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+                        var content = db.Documents
+                            .Where(m => m.Level == document.Level &&
+                                m.LevelId == document.LevelId &&
+                                m.UserId == document.UserId &&
+                                m.Id != document.Id).ToList();
+                        db.Documents.RemoveRange(content);
+                        db.SaveChanges();
+
+                        return RedirectToLevel(document);
                     }
                 }
             }
@@ -189,16 +188,12 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Edit([Bind(Include = "Id,Description,Feedback,Deadline,Level,LevelId")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Description,,Deadline,Level,LevelId")] Document document)
         {
             Document model = db.Documents.Find(document.Id);
             if (document.Deadline == null)
             {
                 model.Deadline = DateTime.Now.AddDays(5.0);
-            }
-            if (!string.IsNullOrEmpty(document.Feedback))
-            {
-                model.Feedback = document.Feedback;
             }
             if (!string.IsNullOrEmpty(document.Description))
             {
@@ -208,22 +203,59 @@ namespace LMS_grupp1.Controllers
             {
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
-
-                if (document.Level == DocumentLevel.GroupLevel)
-                {
-                    return RedirectToAction("Index", "Groups", new { id = document.LevelId });
-                }
-                if (document.Level == DocumentLevel.CourseLevel)
-                {
-                    return RedirectToAction("Details", "Courses", new { id = document.LevelId });
-                }
-                if (document.Level == DocumentLevel.ActivityLevel ||
-                    document.Level == DocumentLevel.PrivateLevel)
-                {
-                    return RedirectToAction("Details", "Activities", new { id = document.LevelId });
-                }
+                RedirectToLevel(model);
             }
             return View(document);
+        }
+
+        // GET: Documents/Feedback/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Feedback(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            return View(document);
+        }
+
+        // POST: Documents/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher, Student")]
+        public ActionResult Feedback([Bind(Include = "Id,Feedback")] Document document, bool passed)
+        {
+            Document model = db.Documents.Find(document.Id);
+            if (string.IsNullOrEmpty(document.Feedback))
+            {
+                ModelState.AddModelError("Feedback", "Synpunkter saknas.");
+            }
+            else
+            {
+                model.Feedback = document.Feedback;
+            }
+            if (passed)
+            {
+                model.Feedback += " /Godkänd";
+            }
+            else
+            {
+                model.Feedback += " /Underkänd";
+            }
+            if (ModelState.IsValid)
+            {
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+                   return RedirectToAction("Details", "Activities", new { id = model.LevelId });
+            }
+            return RedirectToLevel(model);
         }
 
         // GET: Documents/Delete/5
@@ -256,6 +288,11 @@ namespace LMS_grupp1.Controllers
             {
                 System.IO.File.Delete(path);
             }
+            return RedirectToLevel(document);
+        }
+
+        public ActionResult RedirectToLevel(Document document)
+        {
             if (document.Level == DocumentLevel.GroupLevel)
             {
                 return RedirectToAction("Index", "Groups", new { id = document.LevelId });
