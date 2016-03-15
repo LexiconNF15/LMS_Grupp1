@@ -167,10 +167,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603140816444_initial.cs" />
-    <Compile Include="Migrations\201603140816444_initial.Designer.cs">
-      <DependentUpon>201603140816444_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -258,10 +254,10 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Documents\Create.cshtml" />
     <Content Include="Views\Documents\Delete.cshtml" />
-    <Content Include="Views\Documents\Details.cshtml" />
     <Content Include="Views\Documents\Edit.cshtml" />
     <Content Include="Views\Documents\Index.cshtml" />
-    <Content Include="Views\Manage\SetNewPasswordStudent.cshtml" />
+    <Content Include="Views\Documents\UploadIndex.cshtml" />
+    <Content Include="Views\Documents\AssignmentCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,11 +269,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603140816444_initial.resx">
-      <DependentUpon>201603140816444_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

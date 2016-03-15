@@ -25,16 +25,18 @@ namespace LMS_grupp1.Models
         public Guid GuidName { get; set; }
 
         [DisplayName("Beskrivning")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [DisplayName("Kommentar")]
+        [DataType(DataType.MultilineText)]
         public string Feedback { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayName("Datum")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TimeStamp { get; set; }
-       
+
 
         [DataType(DataType.Date)]
         [DisplayName("Slutdatum")]
@@ -47,6 +49,7 @@ namespace LMS_grupp1.Models
 
         public int LevelId { get; set; }
         public DocumentLevel Level { get; set; }
+        public bool Assignment { get; set; }
 
     }
 
@@ -61,9 +64,16 @@ namespace LMS_grupp1.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TimeStamp { get; set; }
 
+        public string Description { get; set; }
+        public string Feedback { get; set; }
+
+        [DisplayName("Slutdatum")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")] 
         public DateTime? Deadline { get; set; }
 
         [DisplayName("Ansvarig")]
         public string Originator { get; set; }
+        public int Level { get; set; }
+        public bool Assignment { get; set; }
     }
 }

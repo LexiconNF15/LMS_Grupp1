@@ -1,10 +1,10 @@
-﻿@model IEnumerable<LMS_grupp1.Models.DocumentView>
+﻿@model IEnumerable<LMS_grupp1.Models.UploadView>
 
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "Inlämnade Dokument";
 }
 
-<h4>Dokument</h4>
+<h4>Inlämnade uppgifter</h4>
 
 <table class="table">
     <tr>
@@ -49,14 +49,8 @@
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @Html.ActionLink("Lämna synpunkter", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
-                </td>
-            }
-            else if (item.Assignment)
-            {
-                <td>
-                    @Html.ActionLink("Lämna svar", "AssignmentCreate", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }
             else if (User.Identity.Name == item.Originator)

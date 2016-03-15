@@ -25,6 +25,10 @@ textarea {
 
 /* Added by ps1230. Talk to him before changing.*/
 
+.tooltip-inner {
+    width: 150px;
+}
+
 .glyph-lg {
     padding:1px 7px 0 7px;
     font-size: 12px;
