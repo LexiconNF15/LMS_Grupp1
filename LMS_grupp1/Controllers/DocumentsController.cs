@@ -37,7 +37,7 @@ namespace LMS_grupp1.Controllers
                      Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email,
                      Assignment = m.Assignment
                  });
-            if (level == DocumentLevel.PrivateLevel)
+            if (level == DocumentLevel.PrivateLevel && User.IsInRole("Student"))
             {
                 model = model.Where(d => d.Originator == User.Identity.Name);
             }
@@ -53,21 +53,6 @@ namespace LMS_grupp1.Controllers
             return File(content, System.Net.Mime.MediaTypeNames.Application.Octet, document.Name);
         }
 
-        // GET: Documents/Details/5
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Document document = db.Documents.Find(id);
-            if (document == null)
-            {
-                return HttpNotFound();
-            }
-            return View(document);
-        }
 
         // GET: Documents/Create
         [Authorize(Roles = "Teacher, Student")]
@@ -149,12 +134,14 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult AssignmentCreate([Bind(Include = "Id,LevelId,Assignment")] Document document)
+        public ActionResult AssignmentCreate([Bind(Include = "Id,LevelId,Deadline")] Document document)
         {
             //Upload a document to document folder
             document.TimeStamp = DateTime.Now;
             document.UserId = User.Identity.GetUserId();
             document.Level = DocumentLevel.PrivateLevel;
+            document.Assignment = false;
+
 
             if (ModelState.IsValid)
             {
@@ -202,12 +189,12 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Edit([Bind(Include = "Id,Description,Feedback,Deadline")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Description,Feedback,Deadline,Level,LevelId")] Document document)
         {
             Document model = db.Documents.Find(document.Id);
             if (document.Deadline == null)
             {
-                model.Deadline = DateTime.Now.AddMonths(1);
+                model.Deadline = DateTime.Now.AddDays(5.0);
             }
             if (!string.IsNullOrEmpty(document.Feedback))
             {
