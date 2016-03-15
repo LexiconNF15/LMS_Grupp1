@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.TimeStamp)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Originator)
         </th>
         <th></th>
@@ -37,6 +40,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TimeStamp)
             </td>
+            <td data_toggle="tooltip" title="@item.Feedback">
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Originator)
             </td>
@@ -44,6 +50,18 @@
             {
                 <td>
                     @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                </td>
+            }
+            else if (item.Assignment)
+            {
+                <td>
+                    @Html.ActionLink("Lämna svar", "AssignmentCreate", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                </td>
+            }
+            else if (User.Identity.Name == item.Originator)
+            {
+                <td>
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }

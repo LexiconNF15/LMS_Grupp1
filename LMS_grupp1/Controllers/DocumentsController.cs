@@ -19,43 +19,28 @@ namespace LMS_grupp1.Controllers
 
         // GET: Documents
         [ChildActionOnly]
-        [Authorize(Roles="Teacher, Student")]
+        [Authorize(Roles = "Teacher, Student")]
         public ActionResult Index(DocumentLevel level, int id)
         {
             var model = db.Documents
-                .Where(d => d.Level == level && d.LevelId == id)
-                .OrderBy(n => n.Name)
-                .Select(m => new DocumentView
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    Description = m.Description,
-                    TimeStamp = m.TimeStamp,
-                    Deadline = m.Deadline,
-                    Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email
-                });
-            return PartialView(model);
-        }
-
-        [ChildActionOnly]
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult UploadIndex(int id)
-        {
-            var model = db.Documents
-                .Where(d => d.Level == DocumentLevel.PrivateLevel &&
-                    d.LevelId == id && 
-                    d.UserId == User.Identity.GetUserId())
-                .OrderBy(n => n.Name)
-                .Select(m => new UploadView
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    Description = m.Description,
-                    Feedback = m.Feedback,
-                    TimeStamp = m.TimeStamp,
-                    Deadline = m.Deadline,
-                    Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email
-                });
+                 .Where(d => d.Level == level &&
+                     d.LevelId == id)
+                 .OrderBy(n => n.Name)
+                 .Select(m => new DocumentView
+                 {
+                     Id = m.Id,
+                     Name = m.Name,
+                     Description = m.Description,
+                     Feedback = m.Feedback,
+                     TimeStamp = m.TimeStamp,
+                     Deadline = m.Deadline,
+                     Originator = db.Users.Where(u => u.Id == m.UserId).FirstOrDefault().Email,
+                     Assignment = m.Assignment
+                 });
+            if (level == DocumentLevel.PrivateLevel && User.IsInRole("Student"))
+            {
+                model = model.Where(d => d.Originator == User.Identity.Name);
+            }
             return PartialView(model);
         }
 
@@ -68,21 +53,6 @@ namespace LMS_grupp1.Controllers
             return File(content, System.Net.Mime.MediaTypeNames.Application.Octet, document.Name);
         }
 
-        // GET: Documents/Details/5
-        [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Document document = db.Documents.Find(id);
-            if (document == null)
-            {
-                return HttpNotFound();
-            }
-            return View(document);
-        }
 
         // GET: Documents/Create
         [Authorize(Roles = "Teacher, Student")]
@@ -100,11 +70,15 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,Deadline,Level,LevelId")] Document document)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Feedback,Deadline,Level,LevelId,Assignment")] Document document)
         {
             //Upload a document to document folder
             document.TimeStamp = DateTime.Now;
             document.UserId = User.Identity.GetUserId();
+            if (document.Assignment && !document.Deadline.HasValue)
+            {
+                ModelState.AddModelError("Deadline", "Slutdatum saknas för inlämning");
+            }
 
             if (ModelState.IsValid)
             {
@@ -143,6 +117,56 @@ namespace LMS_grupp1.Controllers
             return View(document);
         }
 
+        // GET: Documents/Create
+        [Authorize(Roles = "Teacher, Student")]
+        public ActionResult AssignmentCreate(int id)
+        {
+            Document document = db.Documents.Find(id);
+            Document model = new Document();
+            model.Level = DocumentLevel.PrivateLevel;
+            model.LevelId = document.LevelId;
+            return View(model);
+        }
+
+        // POST: Documents/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher, Student")]
+        public ActionResult AssignmentCreate([Bind(Include = "Id,LevelId,Deadline")] Document document)
+        {
+            //Upload a document to document folder
+            document.TimeStamp = DateTime.Now;
+            document.UserId = User.Identity.GetUserId();
+            document.Level = DocumentLevel.PrivateLevel;
+            document.Assignment = false;
+
+
+            if (ModelState.IsValid)
+            {
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+                    if (file.ContentLength > 0)
+                    {
+                        document.GuidName = Guid.NewGuid();
+                        document.Name = Path.GetFileName(file.FileName);
+                        document.Extension = Path.GetExtension(file.FileName);
+
+                        db.Documents.Add(document);
+                        db.SaveChanges();
+
+                        string path = Server.MapPath(locationUrl);
+                        file.SaveAs(Path.Combine(path, document.GuidName + document.Extension));
+
+                        return RedirectToAction("Details", "Activities", new { id = document.LevelId });
+                    }
+                }
+            }
+            return View(document);
+        }
+
         // GET: Documents/Edit/5
         [Authorize(Roles = "Teacher, Student")]
         public ActionResult Edit(int? id)
@@ -165,12 +189,12 @@ namespace LMS_grupp1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher, Student")]
-        public ActionResult Edit([Bind(Include = "Id,Description,Feedback,Deadline")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Description,Feedback,Deadline,Level,LevelId")] Document document)
         {
             Document model = db.Documents.Find(document.Id);
             if (document.Deadline == null)
             {
-                model.Deadline = DateTime.Now.AddMonths(1);
+                model.Deadline = DateTime.Now.AddDays(5.0);
             }
             if (!string.IsNullOrEmpty(document.Feedback))
             {

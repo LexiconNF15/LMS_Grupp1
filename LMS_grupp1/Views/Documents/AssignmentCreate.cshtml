@@ -1,0 +1,41 @@
+﻿@model LMS_grupp1.Models.Document
+
+@{
+    ViewBag.Title = "Ladda upp dokument";
+}
+
+<h2>Ladda upp dokument</h2>
+
+@using (Html.BeginForm("AssignmentCreate", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Dokumentuppgifter</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.LevelId)
+        @Html.HiddenFor(model => model.Level)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <label for="file">Dokument:</label>
+                <input type="file" name="file" id="file" class="btn btn-gray" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Skapa" class="btn btn-gray" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Tillbaka", "Details", "Activities", new { id = Model.LevelId }, new { @class = "btn btn-gray" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

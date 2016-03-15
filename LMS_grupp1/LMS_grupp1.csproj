@@ -257,6 +257,7 @@
     <Content Include="Views\Documents\Edit.cshtml" />
     <Content Include="Views\Documents\Index.cshtml" />
     <Content Include="Views\Documents\UploadIndex.cshtml" />
+    <Content Include="Views\Documents\AssignmentCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
