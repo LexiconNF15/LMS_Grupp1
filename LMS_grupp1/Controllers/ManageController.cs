@@ -275,32 +275,36 @@ namespace LMS_grupp1.Controllers
         }
 
 
-        // GET: /Manage/SetNewPasswordStudent
-        public ActionResult SetNewPasswordStudent()
+
+
+        // GET: /Manage/SetNewPasswordForStudents
+        public ActionResult SetNewPasswordStudent(string id)
         {
-            return View();
+            SetNewPasswordStudentViewModel model = new SetNewPasswordStudentViewModel() { UserId = id };
+            return View(model);
         }
 
-        //
-        // POST: /Manage/SetPassword
+        // POST: /Manage/SetNewPasswordStudent
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetNewPasswordStudent(SetNewPasswordStudentViewModel model)
-        {
-            if (ModelState.IsValid)
+        {     
+             
+            if (!ModelState.IsValid)
             {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-               
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index");
-                }
-          
+                return View(model);
+            }
+            var result = await UserManager.RemovePasswordAsync(model.UserId.ToString());     
+            if (result.Succeeded)
+            {
+                await UserManager.AddPasswordAsync(model.UserId.ToString(), model.NewPassword);
+                return RedirectToAction("Index", "Groups", new { Message = ManageMessageId.SetPasswordSuccess });
+            }
+            AddErrors(result);
             return View(model);
         }
+
+
 
         //
         // GET: /Manage/ManageLogins

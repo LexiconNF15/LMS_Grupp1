@@ -61,6 +61,8 @@ namespace LMS_grupp1.Models
 
     public class SetNewPasswordStudentViewModel
     {
+        public string UserId { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "{0} måste vara minst {2} tecken.", MinimumLength = 6)]
         [DataType(DataType.Password)]
