@@ -281,6 +281,17 @@ namespace LMS_grupp1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
+            var deleted = db.Documents
+                .Where(d => d.Level == DocumentLevel.DeleteLevel)
+                .ToList();
+            if (deleted.Count > 0)
+            {
+                foreach (var item in deleted)
+                {
+                    DeleteDocument(item);
+                }
+                db.Documents.RemoveRange(deleted);
+            }
             db.Documents.Remove(document);
             db.SaveChanges();
             DeleteDocument(document);
