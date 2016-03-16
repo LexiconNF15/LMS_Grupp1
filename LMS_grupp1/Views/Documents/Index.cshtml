@@ -2,9 +2,9 @@
 
 @{
     ViewBag.Title = "";
+    bool hasAssignment = Model.Any(m => m.Assignment);
+    bool assignmentButtonVisible = true;
 }
-
-<h4>Dokument</h4>
 
 <table class="table">
     <tr>
@@ -17,9 +17,12 @@
         <th>
             @Html.DisplayNameFor(model => model.TimeStamp)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Deadline)
-        </th>
+        @if (hasAssignment)
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+        }
         <th>
             @Html.DisplayNameFor(model => model.Originator)
         </th>
@@ -30,33 +33,77 @@
     {
         <tr>
             <td>
-                <a href="@Url.Action("Download", "Documents" , new { id=item.Id })" class="btn btn-blue" data-toggle="tooltip" title="Ladda ner dokument">
-                    <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
-                </a>
+                @if (!item.Assignment)
+                {
+                    <a href="@Url.Action("Download", "Documents" , new { id=item.Id })" class="btn btn-blue" data-toggle="tooltip" title="Ladda ner dokument">
+                        <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
+                    </a>
+                }
+                else
+                {
+                    DateTime now = DateTime.Now.Date;
+                    if (now > item.Deadline)
+                    {
+                        <button class="btn btn-red" data-toggle="tooltip" title="Dokument har passerat slutdatum">
+                            <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
+                        </button>
+                        assignmentButtonVisible = false;
+                    }
+                    else if (now.AddDays(1.0) < item.Deadline)
+                    {
+                        <a href="@Url.Action("Download", "Documents" , new { id=item.Id })" class="btn btn-green" data-toggle="tooltip" title="Ladda ner dokument">
+                            <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Download", "Documents" , new { id=item.Id })" class="btn btn-yellow" data-toggle="tooltip" title="Ladda ner dokument (1 dag kvar)">
+                            <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
+                        </a>
+                    }
+
+                }
             </td>
             <td data_toggle="tooltip" title="@item.Description">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
             <td data_toggle="tooltip" title="@item.Feedback">
-                @Html.DisplayFor(modelItem => item.Deadline)
+                @Html.DisplayFor(modelItem => item.TimeStamp, "yyyy-MM-dd HH:mm")
             </td>
+            @if (hasAssignment)
+            {
+                if (item.Assignment)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deadline)
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Originator)
             </td>
             @if (User.IsInRole("Teacher"))
             {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @if (item.Level == LMS_grupp1.Models.DocumentLevel.PrivateLevel)
+                    {
+                        @Html.ActionLink("Validera", "Feedback", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    }
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }
-            else if (item.Assignment)
+            else if (item.Assignment && assignmentButtonVisible)
             {
                 <td>
-                    @Html.ActionLink("Lämna svar", "AssignmentCreate", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @Html.ActionLink("Lämna svar", "Assignment", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }
             else if (User.Identity.Name == item.Originator)
