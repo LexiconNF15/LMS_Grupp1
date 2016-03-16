@@ -205,7 +205,14 @@ namespace LMS_grupp1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Course course = db.Courses.Find(id);
-            db.Activities.RemoveRange(course.Activities);
+            var documents = db.Documents
+                .Where(d => d.Level == DocumentLevel.CourseLevel &&
+                    d.LevelId == id)
+                .ToList();
+            foreach (var item in documents)
+            {
+                item.Level = DocumentLevel.DeleteLevel;
+            }
             db.Courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index", "Groups", new { id = course.GroupId });
