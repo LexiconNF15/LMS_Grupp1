@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -60,7 +61,7 @@ namespace LMS_grupp1.Controllers
                 }
             }
             return View(activity);
-         }
+        }
 
         // POST: Activities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -164,7 +165,7 @@ namespace LMS_grupp1.Controllers
                 else
                 {
                     List<Activity> activities = db.Activities
-                        .Where(c => c.CourseId == activity.CourseId && c.Id != activity.Id )
+                        .Where(c => c.CourseId == activity.CourseId && c.Id != activity.Id)
                         .ToList();
                     foreach (var item in activities)
                     {
@@ -206,6 +207,16 @@ namespace LMS_grupp1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = db.Activities.Find(id);
+            var documents = db.Documents
+                .Where(d => (d.Level == DocumentLevel.ActivityLevel ||
+                    d.Level == DocumentLevel.PrivateLevel) &&
+                    d.LevelId == id)
+                .ToList();
+            foreach (var item in documents)
+            {
+                RedirectToAction("DeleteDocument", "Documents", new { document = item });
+            }
+            db.Documents.RemoveRange(documents);
             db.Activities.Remove(activity);
             db.SaveChanges();
             return RedirectToAction("Details", "Courses", new { id = activity.CourseId });

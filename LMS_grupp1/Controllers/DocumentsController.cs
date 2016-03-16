@@ -283,12 +283,17 @@ namespace LMS_grupp1.Controllers
             Document document = db.Documents.Find(id);
             db.Documents.Remove(document);
             db.SaveChanges();
+            DeleteDocument(document);
+            return RedirectToLevel(document);
+        }
+
+        public void DeleteDocument(Document document)
+        {
             string path = Server.MapPath(Path.Combine(locationUrl, document.GuidName + document.Extension));
             if (System.IO.File.Exists(path))
             {
                 System.IO.File.Delete(path);
             }
-            return RedirectToLevel(document);
         }
 
         public ActionResult RedirectToLevel(Document document)

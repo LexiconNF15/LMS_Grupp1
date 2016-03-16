@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "";
     bool hasAssignment = Model.Any(m => m.Assignment);
+    bool assignmentButtonVisible = true;
 }
 
 <table class="table">
@@ -46,6 +47,7 @@
                         <button class="btn btn-red" data-toggle="tooltip" title="Dokument har passerat slutdatum">
                             <span class="glyphicon glyphicon-download-alt glyph-lg" aria-hidden="true"></span>
                         </button>
+                        assignmentButtonVisible = false;
                     }
                     else if (now.AddDays(1.0) < item.Deadline)
                     {
@@ -98,7 +100,7 @@
                     @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
                 </td>
             }
-            else if (item.Assignment)
+            else if (item.Assignment && assignmentButtonVisible)
             {
                 <td>
                     @Html.ActionLink("Lämna svar", "Assignment", "Documents", new { id = item.Id }, new { @class = "btn btn-gray" })
