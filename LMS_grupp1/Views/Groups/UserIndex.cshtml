@@ -75,8 +75,10 @@
                     @if (item.Email != User.Identity.Name)
                     {
                         @Html.ActionLink("Ta bort", "DeleteUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" }) @:
-                        @Html.ActionLink("Flytta grupp", "MoveUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" })
+                        @Html.ActionLink("Flytta grupp", "MoveUser", "Account", new { id = item.Id }, new { @class = "btn btn-gray" }) @:
+                        @Html.ActionLink("Byta lösenord", "SetNewPasswordStudent", "Manage", new { id = item.Id }, new { @class = "btn btn-gray" })
                     }
+                    
                 </td>
             }
 

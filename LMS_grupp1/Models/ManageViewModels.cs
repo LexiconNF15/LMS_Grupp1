@@ -58,6 +58,22 @@ namespace LMS_grupp1.Models
         public string ConfirmPassword { get; set; }
     }
 
+
+    public class SetNewPasswordStudentViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} måste vara minst {2} tecken.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Nytt lösenord")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Bekräfta nytt lösenord")]
+        [Compare("NewPassword", ErrorMessage = "Nytt lösenord och bekräftat nytt lösenord stämmer inte överrens.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+
     public class AddPhoneNumberViewModel
     {
         [Required]
