@@ -228,7 +228,7 @@ namespace LMS_grupp1.Migrations
                      GroupId = 1,
                      Description = "Kurs för programmerare.",
                      Name = "C# .NET ",
-                     StartTime = DateTime.ParseExact("11/23/2016", "d", provider),
+                     StartTime = DateTime.ParseExact("11/23/2015", "d", provider),
                      EndTime = DateTime.ParseExact("03/18/2016", "d", provider)
                  },
                  new Course
