@@ -259,6 +259,7 @@
     <Content Include="Views\Documents\UploadIndex.cshtml" />
     <Content Include="Views\Documents\Assignment.cshtml" />
     <Content Include="Views\Documents\Feedback.cshtml" />
+    <Content Include="Views\Manage\SetNewPasswordStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
