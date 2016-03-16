@@ -25,7 +25,7 @@ textarea {
 
 /* Added by ps1230. Talk to him before changing.*/
 
-.tooltip-inner {
+.tooltip .tooltip-inner {
     width: 150px;
 }
 

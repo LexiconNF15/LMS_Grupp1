@@ -28,6 +28,8 @@
     </tr>
     @{
         DateTime now = DateTime.Now.Date;
+        TimeSpan day = new TimeSpan(23, 59, 59);
+        now = now + day;
     }
 
     @foreach (var item in Model)
@@ -74,7 +76,10 @@
             {
                 <td>
                     @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
-                    @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    @if (item.Activities.Count == 0)
+                    {
+                        @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id }, new { @class = "btn btn-gray" })
+                    }
                 </td>
             }
         </tr>

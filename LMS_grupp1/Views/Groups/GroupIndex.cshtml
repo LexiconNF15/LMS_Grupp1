@@ -68,7 +68,10 @@
             </td>
             <td>
                 @Html.ActionLink("Ändra", "Edit", "Groups", new { id = item.Id }, new { @class = "btn btn-gray" })
-                @Html.ActionLink("Ta bort", "Delete", "Groups", new { id = item.Id }, new { @class = "btn btn-gray" })
+                @if (item.Users.Count == 0 && item.Courses.Count == 0)
+                {
+                    @Html.ActionLink("Ta bort", "Delete", "Groups", new { id = item.Id }, new { @class = "btn btn-gray" })
+                }
             </td>
         </tr>
     }
