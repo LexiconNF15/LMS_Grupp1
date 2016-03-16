@@ -121,17 +121,17 @@ namespace LMS_grupp1.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
-            if (group.StartTime < DateTime.Now)
+            if (group.StartTime < DateTime.Now.Date)
             {
                 ModelState.AddModelError("StartTime", "Gruppens startid har passerats.");
             }
-            if (group.EndTime < DateTime.Now)
+            if (group.EndTime < DateTime.Now.Date)
             {
                 ModelState.AddModelError("EndTime", "Gruppens sluttid har passerats.");
             }
             else
             {
-                if (group.StartTime > group.EndTime)
+                if (group.StartTime.Date > group.EndTime.Date)
                 {
                     ModelState.AddModelError("StartTime", "Gruppens sluttid är mindre än starttid");
                 }
@@ -170,6 +170,21 @@ namespace LMS_grupp1.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,StartTime,EndTime")] Group group)
         {
+            if (group.StartTime < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("StartTime", "Gruppens startid har passerats.");
+            }
+            if (group.EndTime < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("EndTime", "Gruppens sluttid har passerats.");
+            }
+            else
+            {
+                if (group.StartTime.Date > group.EndTime.Date)
+                {
+                    ModelState.AddModelError("StartTime", "Gruppens sluttid är mindre än starttid");
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(group).State = EntityState.Modified;

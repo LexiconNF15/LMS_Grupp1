@@ -63,13 +63,13 @@ namespace LMS_grupp1.Models
         public string Name { get; set; }
 
         [DisplayName("Uppladdningsdatum")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime TimeStamp { get; set; }
 
         public string Description { get; set; }
         public string Feedback { get; set; }
 
         [DisplayName("Slutdatum")]
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")] 
         public DateTime? Deadline { get; set; }
 
