@@ -298,7 +298,7 @@ namespace LMS_grupp1.Controllers
             if (result.Succeeded)
             {
                 await UserManager.AddPasswordAsync(model.UserId.ToString(), model.NewPassword);
-                return RedirectToAction("Index", "Groups", new { Message = ManageMessageId.SetPasswordSuccess });
+                return RedirectToAction("UserIndex", "Groups");
             }
             AddErrors(result);
             return View(model);
