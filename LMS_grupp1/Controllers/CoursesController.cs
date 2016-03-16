@@ -84,17 +84,17 @@ namespace LMS_grupp1.Controllers
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
         {
             Group group = db.Groups.Find(course.GroupId);
-            if (course.StartTime < group.StartTime)
+            if (course.StartTime.Date < group.StartTime.Date)
             {
                 ModelState.AddModelError("StartTime", "Kursens startid utanför gruppens kurstid.");
             }
-            if (course.EndTime > group.EndTime)
+            if (course.EndTime.Date > group.EndTime.Date)
             {
                 ModelState.AddModelError("EndTime", "Kursens sluttid utanför gruppens kurstid.");
             }
             else
             {
-                if (course.StartTime > course.EndTime)
+                if (course.StartTime.Date > course.EndTime.Date)
                 {
                     ModelState.AddModelError("EndTime", "Ogiltigt kursintervall");
                 }
@@ -105,8 +105,8 @@ namespace LMS_grupp1.Controllers
                         .ToList();
                     foreach (var item in courses)
                     {
-                        if ((course.StartTime > item.StartTime && course.StartTime < item.EndTime) ||
-                          (course.EndTime > item.StartTime && course.EndTime < item.EndTime))
+                        if ((course.StartTime.Date > item.StartTime.Date && course.StartTime.Date < item.EndTime.Date) ||
+                          (course.EndTime.Date > item.StartTime.Date && course.EndTime.Date < item.EndTime.Date))
                         {
                             ModelState.AddModelError("StartTime", "Kursen ligger i en annans kurs tids intervall");
                         }
@@ -146,19 +146,19 @@ namespace LMS_grupp1.Controllers
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartTime,EndTime,GroupId")] Course course)
         {
             Group group = db.Groups.Find(course.GroupId);
-            if (course.StartTime < group.StartTime)
+            if (course.StartTime.Date < group.StartTime.Date)
             {
                 ModelState.AddModelError("StartTime", "Kursens startid utanför gruppens kurstid.");
             }
-            if (course.EndTime > group.EndTime)
+            if (course.EndTime.Date > group.EndTime.Date)
             {
                 ModelState.AddModelError("EndTime", "Kursens sluttid utanför gruppens kurstid.");
             }
             else
             {
-                if (course.StartTime > course.EndTime)
+                if (course.StartTime.Date > course.EndTime.Date)
                 {
-                    ModelState.AddModelError("StartTime", "Start time i");
+                    ModelState.AddModelError("StartTime", "Ogiltigt kursintervall");
                 }
                 else
                 {
@@ -167,8 +167,8 @@ namespace LMS_grupp1.Controllers
                         .ToList();
                     foreach (var item in courses)
                     {
-                        if ((course.StartTime > item.StartTime && course.StartTime < item.EndTime) ||
-                          (course.EndTime > item.StartTime && course.EndTime < item.EndTime))
+                        if ((course.StartTime.Date > item.StartTime.Date && course.StartTime.Date < item.EndTime.Date) ||
+                          (course.EndTime.Date > item.StartTime.Date && course.EndTime.Date < item.EndTime.Date))
                         {
                             ModelState.AddModelError("StartTime", "Kursen ligger i en annans kurs tids intervall");
                         }
