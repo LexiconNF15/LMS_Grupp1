@@ -214,9 +214,8 @@ namespace LMS_grupp1.Controllers
                 .ToList();
             foreach (var item in documents)
             {
-                RedirectToAction("DeleteDocument", "Documents", new { document = item });
+                item.Level = DocumentLevel.DeleteLevel;
             }
-            db.Documents.RemoveRange(documents);
             db.Activities.Remove(activity);
             db.SaveChanges();
             return RedirectToAction("Details", "Courses", new { id = activity.CourseId });

@@ -13,7 +13,8 @@ namespace LMS_grupp1.Models
         GroupLevel,
         CourseLevel,
         ActivityLevel,
-        PrivateLevel
+        PrivateLevel,
+        DeleteLevel
     }
 
     public class Document
